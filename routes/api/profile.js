@@ -3,6 +3,9 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+// load validation
+const validateProfileInput = require('../../validation/profile.js');
+
 // load Profile model
 const Profile = require('../../models/Profile.js');
 // load User model
@@ -23,6 +26,7 @@ router.get('/', passport.authenticate('jwt', { session: false }),
       const errors = {};
 
       Profile.findOne({ user: req.user.id })
+         .populate('user', ['name', 'avatar'])
          .then(profile => {
             if (!profile) {
                errors.noProfile = 'There is no profile for this user.';
@@ -39,6 +43,14 @@ router.get('/', passport.authenticate('jwt', { session: false }),
 // @access - private
 router.post('/', passport.authenticate('jwt', { session: false }),
    (req, res) => {
+      const { errors, isValid } = validateProfileInput(req.body);
+
+      // check validation
+      if(!isValid) {
+         // return errors with 400 status
+         return res.status(400).json(errors);
+      }
+
       // get fields
       const profileFields = {};
       profileFields.user = req.user.id;
@@ -67,8 +79,7 @@ router.post('/', passport.authenticate('jwt', { session: false }),
                   { user: req.user.id },
                   { $set: profileFields },
                   { new: true }
-               )
-               .then(profile => res.json(profile));
+               ).then(profile => res.json(profile));
             } else {
                // create profile
                // check if handle exists
@@ -82,9 +93,7 @@ router.post('/', passport.authenticate('jwt', { session: false }),
                      // save profile
                      new Profile(profileFields)
                         .save()
-                        .then(profile => {
-                           res.json(profile);
-                        });
+                        .then(profile => res.json(profile));
                   })
             }
          })
