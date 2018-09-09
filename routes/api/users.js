@@ -27,15 +27,17 @@ router.post('/register', (req, res) => {
    const { errors, isValid } = validateRegisterInput(req.body);
 
    // check validation
-   if(!isValid) { // if isValid false
-      return res.status(400).json(errors);
+   if (!isValid) { // if isValid false
+      return res.status(400)
+         .json(errors);
    }
 
    User.findOne({ email: req.body.email })
       .then(user => {
          if (user) {
             errors.email = 'Email already exists.';
-            return res.status(400).json(errors);
+            return res.status(400)
+               .json(errors);
          } else {
             const avatar = gravatar.url(req.body.email, {
                s: '200', // size
@@ -73,8 +75,9 @@ router.post('/login', (req, res) => {
    const password = req.body.password;
 
    // check validation
-   if(!isValid) { // if isValid false
-      return res.status(400).json(errors);
+   if (!isValid) { // if isValid false
+      return res.status(400)
+         .json(errors);
    }
 
    // find user by email
@@ -83,7 +86,8 @@ router.post('/login', (req, res) => {
          // check for user
          if (!user) {
             errors.email = 'User not found.';
-            return res.status(404).json(errors);
+            return res.status(404)
+               .json(errors);
          }
 
          // check password
@@ -108,7 +112,8 @@ router.post('/login', (req, res) => {
                      });
                } else { // user didn't match
                   errors.password = 'Incorrect password.';
-                  return res.status(400).json(errors);
+                  return res.status(400)
+                     .json(errors);
                }
             });
       });
