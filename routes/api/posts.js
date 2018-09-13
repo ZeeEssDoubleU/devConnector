@@ -88,4 +88,59 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }),
    }
 );
 
+// @route - POST api/posts/like/:id
+// @desc - like post
+// @access - private
+router.post('/like/:id', passport.authenticate('jwt', { session: false }),
+   (req, res) => {
+      Profile.findOne({ user: req.user.id })
+         .then(profile => {
+            Post.findById(req.params.id)
+               .then(post => {
+                  // see if user has liked post.  Checks equality in filter function.  If no result is filtered (.length = 0), then user has NOT liked post
+                  if (post.likes.filter(like => like.user.toString() === req.user.id)
+                     .length > 0) {
+                     return res.status(400)
+                        .json({ alreadyLiked: 'User already liked this post.' });
+                  }
+
+                  // add user id to likes array
+                  post.likes.unshift({ user: req.user.id });
+                  // save and return post
+                  post.save()
+                     .then(post => res.json(post));
+               })
+         })
+   }
+);
+
+// @route - POST api/posts/unlike/:id
+// @desc - unlike post
+// @access - private
+router.post('/unlike/:id', passport.authenticate('jwt', { session: false }),
+   (req, res) => {
+      Profile.findOne({ user: req.user.id })
+         .then(profile => {
+            Post.findById(req.params.id)
+               .then(post => {
+                  // see if user has liked post.  Checks equality in filter function.  If no result is filtered (.length = 0), then user has NOT liked post
+                  if (post.likes.filter(like => like.user.toString() === req.user.id)
+                     .length === 0) {
+                     return res.status(400)
+                        .json({ alreadyLiked: "You haven't liked this post yet." });
+                  }
+
+                  // get remove index
+                  const removeIndex = post.likes.map(item => item.user.toString())
+                     .indexOf(req.user.id);
+                  // splice out of array
+                  post.likes.splice(removeIndex, 1);
+                  // save and return post
+                  post.save()
+                     .then(post => res.json(post));
+               })
+         })
+   }
+);
+
 module.exports = router;
