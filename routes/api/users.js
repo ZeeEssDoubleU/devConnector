@@ -13,7 +13,7 @@ const validateLoginInput = require('../../validation/login.js')
 // load models
 const User = require('../../models/User.js');
 
-// @route - GET api/users/register
+// @route - POST api/users/register
 // @desc - register user
 // @access - public
 router.post('/register',
@@ -62,7 +62,7 @@ router.post('/register',
    }
 );
 
-// @route - GET api/users/login
+// @route - POST api/users/login
 // @desc - login user and return JWT token
 // @access - public
 router.post('/login',

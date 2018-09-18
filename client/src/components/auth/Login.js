@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
-
-class Login extends React.Component {
+class Login extends Component {
    constructor() {
       super();
       this.state = {
@@ -22,7 +22,6 @@ class Login extends React.Component {
          password: this.state.password,
       }
       console.log(User);
-      console.log(event);
    }
 
    render() {

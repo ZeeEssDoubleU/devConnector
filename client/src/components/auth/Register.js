@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
-
-class Register extends React.Component {
+class Register extends Component {
    constructor() {
       super();
       this.state = {
@@ -14,7 +14,8 @@ class Register extends React.Component {
    }
 
    onChange = (event) => {
-      this.setState({ [event.target.name]: event.target.value })
+      this.setState({
+         [event.target.name]: event.target.value })
    }
 
    onSubmit = (event) => {
@@ -26,7 +27,9 @@ class Register extends React.Component {
          password2: this.state.password2,
       }
       console.log(newUser);
-      console.log(event);
+      axios.post('/api/users/register', newUser)
+         .then(res => console.log(res.data))
+         .catch(err => console.log(err.response.data))
    }
 
    render() {
