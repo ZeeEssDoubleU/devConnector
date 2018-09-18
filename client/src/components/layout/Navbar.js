@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-class MyComponent extends React.Component {
+class Navbar extends React.Component {
    render() {
       return (
          <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
@@ -35,4 +35,4 @@ class MyComponent extends React.Component {
    }
 }
 
-export default MyComponent;
+export default Navbar;
