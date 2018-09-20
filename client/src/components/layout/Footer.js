@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from "react";
 
 const Footer = (props) => {
    return (
@@ -7,6 +6,6 @@ const Footer = (props) => {
          Copyright &copy; {new Date().getFullYear()} DevConnector
       </footer>
    );
-}
+};
 
 export default Footer;
