@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
@@ -30,7 +31,13 @@ class Register extends Component {
          password2: this.state.password2,
       };
 
-      this.props.registerUser(newUser);
+      this.props.registerUser(newUser, this.props.history);
+   }
+
+   componentWillReceiveProps(nextProps) {
+      if(nextProps.errors) {
+         this.setState({ errors: nextProps.errors });
+      }
    }
 
    render() {
@@ -49,7 +56,7 @@ class Register extends Component {
                               type="text"
                               className={
                                  "form-control form-control-lg" +
-                                 (errors.name ? " is-invalid" : "")
+                                 (errors.name ? " is-invalid" : null)
                               }
                               placeholder="Name"
                               name="name"
@@ -65,7 +72,7 @@ class Register extends Component {
                               type="email"
                               className={
                                  "form-control form-control-lg" +
-                                 (errors.email ? " is-invalid" : "")
+                                 (errors.email ? " is-invalid" : null)
                               }
                               placeholder="Email Address"
                               name="email"
@@ -82,7 +89,7 @@ class Register extends Component {
                               type="password"
                               className={
                                  "form-control form-control-lg" +
-                                 (errors.password ? " is-invalid" : "")
+                                 (errors.password ? " is-invalid" : null)
                               }
                               placeholder="Password"
                               name="password"
@@ -98,7 +105,7 @@ class Register extends Component {
                               type="password"
                               className={
                                  "form-control form-control-lg" +
-                                 (errors.password2 ? " is-invalid" : "")
+                                 (errors.password2 ? " is-invalid" : null)
                               }
                               placeholder="Confirm Password"
                               name="password2"
@@ -122,15 +129,17 @@ class Register extends Component {
 Register.propTypes = {
    registerUser: PropTypes.func.isRequired,
    auth: PropTypes.object.isRequired,
+   errors: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
    auth: state.auth,
+   errors: state.errors,
 });
 
-Register = connect(
+Register = withRouter(connect(
    mapStateToProps,
    actions
-)(Register)
+)(Register));
 
 export default Register;
