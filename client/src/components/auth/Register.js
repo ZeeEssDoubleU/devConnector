@@ -35,7 +35,7 @@ class Register extends Component {
    }
 
    componentWillReceiveProps(nextProps) {
-      if(nextProps.errors) {
+      if (nextProps.errors) {
          this.setState({ errors: nextProps.errors });
       }
    }
@@ -137,9 +137,11 @@ const mapStateToProps = (state) => ({
    errors: state.errors,
 });
 
-Register = withRouter(connect(
-   mapStateToProps,
-   actions
-)(Register));
+Register = withRouter(
+   connect(
+      mapStateToProps,
+      actions
+   )(Register)
+);
 
 export default Register;

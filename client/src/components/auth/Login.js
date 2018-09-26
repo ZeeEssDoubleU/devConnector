@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class Login extends Component {
    constructor() {
@@ -22,10 +26,21 @@ class Login extends Component {
          email: this.state.email,
          password: this.state.password,
       };
-      console.log(User);
+      this.props.loginUser(User);
    };
 
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.auth.isAuthenticated) {
+         this.props.history.push('./dashboard');
+      }
+
+      if (nextProps.errors) {
+         this.setState({ errors: nextProps.errors });
+      }
+   }
+
    render() {
+      const { errors } = this.state;
       return (
          <div className="login">
             <div className="container">
@@ -37,22 +52,34 @@ class Login extends Component {
                         <div className="form-group">
                            <input
                               type="email"
-                              className="form-control form-control-lg"
+                              className={
+                                 "form-control form-control-lg" +
+                                 (errors.email ? " is-invalid" : null)
+                              }
                               placeholder="Email Address"
                               name="email"
                               value={ this.state.email }
                               onChange={ this.onChange }
                            />
+                           { errors.email
+                              && <div className="invalid-feedback">{errors.email}</div>
+                           }
                         </div>
                         <div className="form-group">
                            <input
                               type="password"
-                              className="form-control form-control-lg"
+                              className={
+                                 "form-control form-control-lg" +
+                                 (errors.password ? " is-invalid" : null)
+                              }
                               placeholder="Password"
                               name="password"
                               value={ this.state.password }
                               onChange={ this.onChange }
                            />
+                           { errors.password
+                              && <div className="invalid-feedback">{errors.password}</div>
+                           }
                         </div>
                         <input
                            type="submit"
@@ -66,5 +93,23 @@ class Login extends Component {
       );
    }
 }
+
+Login.propTypes = {
+   loginUser: PropTypes.func.isRequired,
+   auth: PropTypes.object.isRequired,
+   errors: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+   auth: state.auth,
+   errors: state.errors,
+});
+
+Login = withRouter(
+   connect(
+      mapStateToProps,
+      actions
+   )(Login)
+);
 
 export default Login;
