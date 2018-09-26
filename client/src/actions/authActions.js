@@ -30,7 +30,7 @@ export const loginUser = (userData) => (dispatch) => {
          const { token } = res.data;
          localStorage.setItem('jwtToken', token);
 
-         // set token to 'authorization header
+         // set token to 'authorization' header
          setAuthToken(token);
          // decode token to get user data
          const decoded = jwt_decode(token);
@@ -53,4 +53,16 @@ export const setCurrentUser = (decoded) => {
       type: 'SET_CURRENT_USER',
       payload: decoded,
    };
+};
+
+// log user out
+export const logoutUser = (history) => (dispatch) => {
+   // remove token from localStorage
+   localStorage.removeItem('jwtToken');
+   // remove the 'authorization' header from future requests
+   setAuthToken(false);
+   // set current user to {}, which sets isAuthenticated to false
+   dispatch(setCurrentUser({}));
+   // redirect to login page
+   history.push('/login');
 };

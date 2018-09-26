@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import * as authActions from '../../actions/authActions.js';
 
 class Register extends Component {
    constructor() {
@@ -32,6 +32,13 @@ class Register extends Component {
       };
 
       this.props.registerUser(newUser, this.props.history);
+   }
+
+   componentDidMount() {
+      // if user already logged in, redirect them to dashboard
+      if (this.props.auth.isAuthenticated) {
+         this.props.history.push('/dashboard');
+      }
    }
 
    componentWillReceiveProps(nextProps) {
@@ -140,7 +147,7 @@ const mapStateToProps = (state) => ({
 Register = withRouter(
    connect(
       mapStateToProps,
-      actions
+      authActions
    )(Register)
 );
 

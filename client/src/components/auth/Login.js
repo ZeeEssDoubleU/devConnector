@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import * as authActions from '../../actions/authActions.js';
 
 class Login extends Component {
    constructor() {
@@ -29,7 +28,15 @@ class Login extends Component {
       this.props.loginUser(User);
    };
 
+   componentDidMount() {
+      // if user already logged in, redirect them to dashboard
+      if (this.props.auth.isAuthenticated) {
+         this.props.history.push('/dashboard');
+      }
+   }
+
    componentWillReceiveProps(nextProps) {
+      // if user logged in, redirect them to dashboard
       if (nextProps.auth.isAuthenticated) {
          this.props.history.push('./dashboard');
       }
@@ -105,11 +112,9 @@ const mapStateToProps = (state) => ({
    errors: state.errors,
 });
 
-Login = withRouter(
-   connect(
-      mapStateToProps,
-      actions
-   )(Login)
-);
+Login = connect(
+   mapStateToProps,
+   authActions
+)(Login);
 
 export default Login;

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { Route, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken.js';
-import * as actions from './actions';
-import { Provider } from "react-redux";
-import store from "./store";
+import * as authActions from './actions/authActions.js';
 
 // import components
 import Navbar from "./components/layout/Navbar.js";
@@ -16,34 +16,53 @@ import Login from "./components/auth/Login.js";
 // import stylesheet
 import "./App.css"
 
-// check for token
-if(localStorage.jwtToken) {
-   // set token to 'authorization header
-   setAuthToken(localStorage.jwtToken);
-   // decode token and get user info and expiration
-   const decoded = jwt_decode(localStorage.jwtToken);
-   // set current user
-   store.dispatch(actions.setCurrentUser(decoded));
-}
-
 class App extends Component {
+   componentDidMount() {
+      // check for token
+      if (localStorage.jwtToken) {
+         // set token to 'authorization' header
+         setAuthToken(localStorage.jwtToken);
+         // decode token and get user info and expiration
+         const decoded = jwt_decode(localStorage.jwtToken);
+         // set current user
+         this.props.setCurrentUser(decoded);
+
+         // check for expired token
+         const currentTime = Date.now() / 1000;
+         if (currentTime >= decoded.exp) {
+            // logout current user
+            this.props.logoutUser(this.props.history);
+            // TODO: clear current profile
+
+         }
+      }
+   }
+
    render() {
       return (
-         <Provider store={store}>
-            <BrowserRouter>
-               <div className="App">
-                  <Navbar />
-                  <Route exact path="/" component={Landing} />
-                  <div className="container">
-                     <Route exact path="/register" component={Register} />
-                     <Route exact path="/login" component={Login} />
-                  </div>
-                  <Footer />
-               </div>
-            </BrowserRouter>
-         </Provider>
+         <div className="App">
+            <Navbar />
+            <Route exact path="/" component={Landing} />
+            <div className="container">
+               <Route exact path="/register" component={Register} />
+               <Route exact path="/login" component={Login} />
+            </div>
+            <Footer />
+         </div>
       );
    }
 }
+
+App.propTypes = {
+   setCurrentUser: PropTypes.func.isRequired,
+   logoutUser: PropTypes.func.isRequired,
+}
+
+App = withRouter(
+   connect(
+      null,
+      authActions
+   )(App)
+);
 
 export default App;
