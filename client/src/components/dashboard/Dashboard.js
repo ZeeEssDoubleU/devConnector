@@ -21,8 +21,13 @@ Dashboard.propTypes = {
    getCurrentProfile: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+   profile: state.profile,
+   auth: state.auth,
+});
+
 Dashboard = connect(
-   null,
+   mapStateToProps,
    profileActions
 )(Dashboard);
 

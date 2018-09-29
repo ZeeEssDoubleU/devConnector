@@ -12,16 +12,17 @@ export const getCurrentProfile = () => (dispatch) => {
    );
    axios.get('api/profile')
       .then(res => {
-         return {
+         dispatch ({
             type: GET_PROFILE,
             payload: res.data,
-         };
+         });
       })
       .catch(err => {
-         return {
+         console.log('Errors:', err.response.data);
+         dispatch ({
             type: GET_PROFILE,
             payload: {},
-         };
+         });
       });
 };
 
