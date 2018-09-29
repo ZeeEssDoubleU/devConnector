@@ -9,9 +9,29 @@ class Dashboard extends Component {
    }
 
    render() {
+      const { user } = this.props.auth;
+      const { profile, loading } = this.props.profile;
+
+      let dashboardContent;
+
+      if (profile === null || loading) {
+         dashboardContent = <h4>Loading...</h4>
+      } else {
+         dashboardContent = <h4>Hello { user.name }.</h4>
+      }
+
       return (
          <div>
-            <h1>Dashboard</h1>
+            <div className="dashboard">
+               <div className="container">
+                  <div className="row">
+                     <div className="col-md-12">
+                        <h4 className="display-4">Dashboard</h4>
+                        { dashboardContent }
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
       );
    }
