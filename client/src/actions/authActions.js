@@ -1,6 +1,10 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken.js';
 import jwt_decode from 'jwt-decode'; // module that decodeds jwt token
+import {
+   GET_ERRORS,
+   SET_CURRENT_USER
+} from './types.js';
 
 // register user
 export const registerUser = (userData, history) => (dispatch) => {
@@ -13,7 +17,7 @@ export const registerUser = (userData, history) => (dispatch) => {
       .catch(err => {
          console.log('Errors:', err.response.data);
          dispatch({
-            type: 'GET_ERRORS',
+            type: GET_ERRORS,
             payload: err.response.data
          });
       });
@@ -36,12 +40,14 @@ export const loginUser = (userData) => (dispatch) => {
          const decoded = jwt_decode(token);
          console.log('Login User action decoded', decoded);
          // set current user
-         dispatch(setCurrentUser(decoded));
+         dispatch(
+            setCurrentUser(decoded)
+         );
       })
       .catch(err => {
          console.log('Errors:', err.response.data);
          dispatch({
-            type: 'GET_ERRORS',
+            type: GET_ERRORS,
             payload: err.response.data
          });
       });
@@ -50,7 +56,7 @@ export const loginUser = (userData) => (dispatch) => {
 // set logged in user
 export const setCurrentUser = (decoded) => {
    return {
-      type: 'SET_CURRENT_USER',
+      type: SET_CURRENT_USER,
       payload: decoded,
    };
 };
@@ -62,7 +68,9 @@ export const logoutUser = (history) => (dispatch) => {
    // remove the 'authorization' header from future requests
    setAuthToken(false);
    // set current user to {}, which sets isAuthenticated to false
-   dispatch(setCurrentUser({}));
+   dispatch(
+      setCurrentUser({})
+   );
    // redirect to login page
    history.push('/login');
 };

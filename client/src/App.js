@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken.js';
 import * as authActions from './actions/authActions.js';
+import * as profileActions from './actions/profileActions.js';
 
 // import components
 import Navbar from "./components/layout/Navbar.js";
@@ -12,6 +13,7 @@ import Landing from "./components/layout/Landing.js";
 import Footer from "./components/layout/Footer.js";
 import Register from "./components/auth/Register.js";
 import Login from "./components/auth/Login.js";
+import Dashboard from "./components/dashboard/Dashboard.js";
 
 // import stylesheet
 import "./App.css"
@@ -32,8 +34,8 @@ class App extends Component {
          if (currentTime >= decoded.exp) {
             // logout current user
             this.props.logoutUser(this.props.history);
-            // TODO: clear current profile
-
+            // clear current profile
+            this.props.clearCurrentProfile();
          }
       }
    }
@@ -46,6 +48,7 @@ class App extends Component {
             <div className="container">
                <Route exact path="/register" component={Register} />
                <Route exact path="/login" component={Login} />
+               <Route exact path="/dashboard" component={Dashboard} />
             </div>
             <Footer />
          </div>
@@ -54,14 +57,14 @@ class App extends Component {
 }
 
 App.propTypes = {
-   setCurrentUser: PropTypes.func.isRequired,
+   setCurrentUser: PropTypes.func,
    logoutUser: PropTypes.func.isRequired,
 }
 
 App = withRouter(
    connect(
       null,
-      authActions
+      { ...authActions, ...profileActions }
    )(App)
 );
 
