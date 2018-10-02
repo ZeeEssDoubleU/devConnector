@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -95,8 +95,7 @@ const mapStateToProps = (state) => ({
 
 Navbar = withRouter(
    connect(
-      mapStateToProps,
-      { ...authActions, ...profileActions }
+      mapStateToProps, { ...authActions, ...profileActions }
    )(Navbar)
 );
 

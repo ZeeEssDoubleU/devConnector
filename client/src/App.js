@@ -19,7 +19,7 @@ import Dashboard from "./components/dashboard/Dashboard.js";
 import "./App.css"
 
 class App extends Component {
-   componentDidMount() {
+   componentWillMount() {
       // check for token
       if (localStorage.jwtToken) {
          // set token to 'authorization' header
@@ -63,8 +63,7 @@ App.propTypes = {
 
 App = withRouter(
    connect(
-      null,
-      { ...authActions, ...profileActions }
+      null, { ...authActions, ...profileActions }
    )(App)
 );
 
