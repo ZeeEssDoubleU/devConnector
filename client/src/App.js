@@ -8,6 +8,7 @@ import * as authActions from './actions/authActions.js';
 import * as profileActions from './actions/profileActions.js';
 
 // import components
+import PrivateRoute from './components/common/PrivateRoute.js';
 import Navbar from "./components/layout/Navbar.js";
 import Landing from "./components/layout/Landing.js";
 import Footer from "./components/layout/Footer.js";
@@ -48,8 +49,8 @@ class App extends Component {
             <div className="container">
                <Route exact path="/register" component={Register} />
                <Route exact path="/login" component={Login} />
-               <Route exact path="/dashboard" component={Dashboard} />
-            </div>
+               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+               </div>
             <Footer />
          </div>
       );

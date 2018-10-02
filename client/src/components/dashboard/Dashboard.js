@@ -21,7 +21,8 @@ class Dashboard extends Component {
          dashboardContent = <Spinner/>;
       } else {
          // check if logged in user has profile data
-         if (Object.keys(profile).length > 0) {
+         if (Object.keys(profile)
+            .length > 0) {
             dashboardContent = <h4>TODO: Display Profile</h4>;
          } else {
             // user is logged in, but has no profile
@@ -29,7 +30,10 @@ class Dashboard extends Component {
                <div>
                   <p className="lead text-muted">Welcome, { user.name }.</p>
                   <p>You have not yet created a profile, please add some info.</p>
-                  <Link to='/create-profile' className='btn btn-lg btn-info'>
+                  <Link
+                     to='/create-profile'
+                     className='btn btn-lg btn-info'
+                  >
                      Create Profile
                   </Link>
                </div>

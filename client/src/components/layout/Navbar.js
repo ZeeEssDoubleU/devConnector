@@ -75,7 +75,9 @@ class Navbar extends Component {
                         </Link>
                      </li>
                   </ul>
-                  { isAuthenticated ? authLinks : guestLinks }
+                  { isAuthenticated
+                     ? authLinks
+                     : guestLinks }
                </div>
             </div>
          </nav>
@@ -95,7 +97,8 @@ const mapStateToProps = (state) => ({
 
 Navbar = withRouter(
    connect(
-      mapStateToProps, { ...authActions, ...profileActions }
+      mapStateToProps,
+      { ...authActions, ...profileActions }
    )(Navbar)
 );
 
