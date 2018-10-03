@@ -13,7 +13,7 @@ let PrivateRoute = ({ component: Component, auth, ...rest }) => {
                : <Redirect to='/login' />
          }
       />
-   );
+);
 };
 
 PrivateRoute.propTypes = {
@@ -27,7 +27,7 @@ const mapStateToProps = (state) => ({
 PrivateRoute = withRouter(
    connect(
       mapStateToProps
-   )(PrivateRoute)
+)(PrivateRoute)
 );
 
 export default PrivateRoute;
