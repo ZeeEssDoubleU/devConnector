@@ -130,7 +130,6 @@ class CreateProfile extends Component {
                            onChange={this.onChange}
                            error={errors.handle}
                            info='A unique name for your profile URL.  Your full name, company name, nickname, etc.'
-                           required={true}
                         />
                         <SelectListGroup
                            name='jobStatus'
@@ -139,7 +138,6 @@ class CreateProfile extends Component {
                            options={options}
                            error={errors.jobStatus}
                            info='Give us an idea of where you are in your career.'
-                           required={true}
                         />
                         <TextFieldGroup
                            name='company'
@@ -192,15 +190,18 @@ class CreateProfile extends Component {
 
                         <div className="mb-3">
                            <button
-                              onClick={this.toggleSocialInputs}
                               className="btn btn-light"
+                              type='button'
+                              onClick={this.toggleSocialInputs}
                            >
                               {socialToggleButton}
                            </button>
                            <span className="text-muted">Optional</span>
                         </div>
                         {socialInputs}
-                        <input type="submit" value="Submit" className="btn btn-info btn-block mt-4"/>
+                        <button type="submit" className="btn btn-info btn-block mt-4">
+                           Submit
+                        </button>
                      </form>
                   </div>
                </div>

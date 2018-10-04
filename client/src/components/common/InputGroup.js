@@ -28,7 +28,7 @@ const InputGroup = (props) => {
 InputGroup.propTypes = {
    name: PropTypes.string.isRequired,
    placeholder: PropTypes.string,
-   value: PropTypes.string.isRequired,
+   value: PropTypes.string,
    error: PropTypes.string,
    onChange: PropTypes.func.isRequired,
    icon: PropTypes.string,
