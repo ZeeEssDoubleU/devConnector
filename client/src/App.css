@@ -43,3 +43,7 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+select:required:invalid {
+  color: #BBBBBB;
+}

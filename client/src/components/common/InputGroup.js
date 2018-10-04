@@ -6,18 +6,19 @@ const InputGroup = (props) => {
       <div className="input-group mb-3">
          <div className="input-group-prepend">
             <span className="input-group-text">
-               <i className-{props.icon} />
+               <i className={props.icon} />
             </span>
          </div>
          <input
             className={
                "form-control form-control-lg" +
-               (props.error ? " is-invalid" : null)
+               (props.error ? " is-invalid" : '')
             }
             placeholder={ props.placeholder }
             name={ props.name }
             value={ props.value }
             onChange={ props.onChange }
+            required={ props.required }
          />
          { props.error && <div className="invalid-feedback">{ props.error }</div> }
       </div>
@@ -32,6 +33,7 @@ InputGroup.propTypes = {
    onChange: PropTypes.func.isRequired,
    icon: PropTypes.string,
    type: PropTypes.string.isRequired,
+   required: PropTypes.bool,
 }
 
 InputGroup.defaultProps = {
