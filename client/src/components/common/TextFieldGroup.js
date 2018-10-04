@@ -15,7 +15,6 @@ const TextFieldGroup = (props) => {
             value={ props.value }
             onChange={ props.onChange }
             disabled={ props.disabled }
-            required={ props.required }
          />
          { props.info && <small className="form-text text-muted">{ props.info }</small> }
          { props.error && <div className="invalid-feedback">{ props.error }</div> }
@@ -32,7 +31,6 @@ TextFieldGroup.propTypes = {
    info: PropTypes.string,
    type: PropTypes.string.isRequired,
    disabled: PropTypes.string,
-   required: PropTypes.bool,
 }
 
 TextFieldGroup.defaultProps = {

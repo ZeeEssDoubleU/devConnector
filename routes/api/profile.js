@@ -127,7 +127,7 @@ router.post('/', passport.authenticate('jwt', { session: false }),
       // skills = split into array
       if (typeof req.body.skills !== 'undefined') profileFields.skills = req.body.skills.split(',');
       if (req.body.bio) profileFields.bio = req.body.bio;
-      if (req.body.gitHubUserName) profileFields.gitHubUserName = req.body.gitHubUserName;
+      if (req.body.githubUserName) profileFields.githubUserName = req.body.githubUserName;
       // social
       profileFields.social = {};
       if (req.body.youtube) profileFields.social.youtube = req.body.youtube;

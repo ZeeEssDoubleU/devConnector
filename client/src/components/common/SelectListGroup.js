@@ -28,7 +28,6 @@ const SelectListGroup = (props) => {
             name={ props.name }
             value={ props.value }
             onChange={ props.onChange }
-            required={ props.required }
          >
             {selectOptions}
          </select>
@@ -45,7 +44,6 @@ SelectListGroup.propTypes = {
    info: PropTypes.string,
    onChange: PropTypes.func.isRequired,
    options: PropTypes.array.isRequired,
-   required: PropTypes.bool,
 }
 
 export default SelectListGroup;

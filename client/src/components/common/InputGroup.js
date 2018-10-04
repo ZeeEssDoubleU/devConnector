@@ -18,7 +18,6 @@ const InputGroup = (props) => {
             name={ props.name }
             value={ props.value }
             onChange={ props.onChange }
-            required={ props.required }
          />
          { props.error && <div className="invalid-feedback">{ props.error }</div> }
       </div>
@@ -33,7 +32,6 @@ InputGroup.propTypes = {
    onChange: PropTypes.func.isRequired,
    icon: PropTypes.string,
    type: PropTypes.string.isRequired,
-   required: PropTypes.bool,
 }
 
 InputGroup.defaultProps = {
