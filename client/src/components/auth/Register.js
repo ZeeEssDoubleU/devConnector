@@ -17,13 +17,13 @@ class Register extends Component {
       };
    }
 
-   onChange = (event) => {
+   onChange = event => {
       this.setState({
          [event.target.name]: event.target.value
       })
    }
 
-   onSubmit = (event) => {
+   onSubmit = event => {
       event.preventDefault();
       const newUser = {
          name: this.state.name,
@@ -108,7 +108,7 @@ Register.propTypes = {
    errors: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
    auth: state.auth,
    errors: state.errors,
 });

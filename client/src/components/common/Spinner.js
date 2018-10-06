@@ -1,7 +1,7 @@
 import React from 'react';
 import spinner from './spinner.gif';
 
-const Spinner = (props) => {
+const Spinner = props => {
    return (
       <div>
          <img

@@ -4,8 +4,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../common/Spinner.js';
 import * as profileActions from '../../actions/profileActions.js';
+import ProfileActions from './ProfileActions.js';
 
 class Dashboard extends Component {
+   onDeleteClick = event => {
+      this.props.deleteAccount();
+   }
+
    componentDidMount() {
       this.props.getCurrentProfile();
    }
@@ -23,7 +28,20 @@ class Dashboard extends Component {
          // check if logged in user has profile data
          if (Object.keys(profile)
             .length > 0) {
-            dashboardContent = <h4>TODO: Display Profile</h4>;
+            dashboardContent = (
+               <div>
+                  <p className="lead text-muted">
+                     Welcome, <Link to={`/profile/${profile.handle}`}>{ user.name }.</Link>
+                  </p>
+                  <ProfileActions />
+                  {/* TODO: experience and education */}
+                  <div style={{ marginBottom: '60px '}}>
+                     <button onClick={this.onDeleteClick} className="btn btn-danger">
+                        Delete My Account
+                     </button>
+                  </div>
+               </div>
+            )
          } else {
             // user is logged in, but has no profile
             dashboardContent = (
@@ -38,28 +56,31 @@ class Dashboard extends Component {
          }
       }
 
-      return (<div>
-         <div className="dashboard">
-            <div className="container">
-               <div className="row">
-                  <div className="col-md-12">
-                     <h4 className="display-4">Dashboard</h4>
-                     { dashboardContent }
+      return (
+         <div>
+            <div className="dashboard">
+               <div className="container">
+                  <div className="row">
+                     <div className="col-md-12">
+                        <h4 className="display-4">Dashboard</h4>
+                        { dashboardContent }
+                     </div>
                   </div>
                </div>
             </div>
          </div>
-      </div>);
+      );
    }
 }
 
 Dashboard.propTypes = {
    getCurrentProfile: PropTypes.func.isRequired,
+   deleteAccount: PropTypes.func.isRequired,
    auth: PropTypes.object.isRequired,
    profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
    profile: state.profile,
    auth: state.auth
 });

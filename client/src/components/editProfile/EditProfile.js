@@ -6,8 +6,9 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup.js';
 import InputGroup from '../common/InputGroup.js';
 import SelectListGroup from '../common/SelectListGroup.js';
 import * as profileActions from '../../actions/profileActions.js';
+import isEmpty from '../../validation/isEmpty.js';
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
    constructor(props) {
       super(props);
       this.state = {
@@ -31,12 +32,30 @@ class CreateProfile extends Component {
 
    onChange = event => {
       this.setState({
-         [event.target.name]: event.target.value });
+         [event.target.name]: event.target.value
+      });
+   }
+
+   componentDidMount() {
+      this.props.getCurrentProfile();
    }
 
    componentWillReceiveProps(nextProps) {
       if (nextProps.errors) {
          this.setState({ errors: nextProps.errors });
+      }
+
+      if (nextProps.profile.profile) {
+
+         // pull profile data from app (not component) profile state
+         const { skills, social, ...profile } = nextProps.profile.profile;
+
+         this.setState({
+            displaySocialInputs: social ? true : false, // display social inputs if social exists
+            skills: skills.join(','), // write over skills (convert array to CSV)
+            ...social, // write over social
+            ...profile, // write over the rest of the profile component state
+         });
       }
    }
 
@@ -124,8 +143,7 @@ class CreateProfile extends Component {
             <div className="container">
                <div className="row">
                   <div className="col-md-8 m-auto">
-                     <h1 className="display-4 text-center">Create your profile.</h1>
-                     <p className="lead text-center">Let's get some information to make your profile stand out.</p>
+                     <h1 className="display-4 text-center">Edit your profile.</h1>
                      <small className="d-block pb-3">* = required fields</small>
 
                      <form onSubmit={this.onSubmit}>
@@ -217,7 +235,9 @@ class CreateProfile extends Component {
    }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
+   createProfile: PropTypes.func.isRequired,
+   getCurrentProfile: PropTypes.func.isRequired,
    profile: PropTypes.object.isRequired,
    errors: PropTypes.object.isRequired,
 };
@@ -227,9 +247,8 @@ const mapStateToProps = state => ({
    errors: state.errors
 });
 
-CreateProfile = connect(
-   mapStateToProps,
-   { ...profileActions }
-)(CreateProfile);
+EditProfile = connect(
+   mapStateToProps, { ...profileActions }
+)(EditProfile);
 
-export default CreateProfile;
+export default EditProfile;

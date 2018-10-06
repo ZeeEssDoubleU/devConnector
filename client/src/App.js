@@ -16,6 +16,7 @@ import Register from "./components/auth/Register.js";
 import Login from "./components/auth/Login.js";
 import Dashboard from "./components/dashboard/Dashboard.js";
 import CreateProfile from "./components/createProfile/CreateProfile.js";
+import EditProfile from './components/editProfile/EditProfile.js';
 
 // import stylesheet
 import "./App.css"
@@ -52,6 +53,7 @@ class App extends Component {
                <Route exact path="/login" component={Login} />
                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+               <PrivateRoute exact path="/edit-profile" component={EditProfile} />
             </div>
             <Footer />
          </div>

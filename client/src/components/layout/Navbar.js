@@ -7,7 +7,7 @@ import * as authActions from '../../actions/authActions.js';
 import * as profileActions from '../../actions/profileActions.js';
 
 class Navbar extends Component {
-   onLogoutClick = (event) => {
+   onLogoutClick = event => {
       event.preventDefault();
       // logout current user
       this.props.logoutUser(this.props.history);
@@ -20,6 +20,11 @@ class Navbar extends Component {
 
       const authLinks = (
          <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+               <Link className="nav-link" to="/dashboard">
+                  Dashboard
+               </Link>
+            </li>
             <li className="nav-item">
                <a href=""
                   className="nav-link"
@@ -91,7 +96,7 @@ Navbar.propTypes = {
    auth: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
    auth: state.auth,
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SelectListGroup = (props) => {
+const SelectListGroup = props => {
    const selectOptions = props.options.map(option => {
       if (option.value === '') {
          return (
