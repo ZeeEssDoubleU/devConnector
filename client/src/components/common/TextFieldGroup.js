@@ -27,7 +27,7 @@ TextFieldGroup.propTypes = {
 	error: PropTypes.string,
 	info: PropTypes.string,
 	type: PropTypes.string.isRequired,
-	disabled: PropTypes.string,
+	disabled: PropTypes.bool,
 };
 
 TextFieldGroup.defaultProps = {
