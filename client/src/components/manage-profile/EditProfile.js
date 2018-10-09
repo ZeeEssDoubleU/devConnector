@@ -58,7 +58,7 @@ class EditProfile extends Component {
 	}
 
 	onSubmit = (event) => {
-		event.preventDefault();
+      event.preventDefault();
 		// call createProfile action.  Don't have to import withRouter for history, because withRouter already imported to PrivateRoute.
 		this.props.createProfile(this.state, this.props.history);
 	};
