@@ -84,6 +84,26 @@ export const deleteExperience = id => dispatch => {
 	axios
 		.delete(`/api/profile/experience/${id}`)
 		.then(res => {
+			console.log("Experience deleted:", res.data);
+			dispatch({
+				type: GET_CURRENT_PROFILE,
+				payload: res.data,
+			})
+		})
+		.catch(err => {
+			console.log("Errors:", err.response.data);
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data,
+			})
+		});
+};
+
+// delete education
+export const deleteEducation = id => dispatch => {
+	axios
+		.delete(`/api/profile/education/${id}`)
+		.then(res => {
 			console.log("Education deleted:", res.data);
 			dispatch({
 				type: GET_CURRENT_PROFILE,
