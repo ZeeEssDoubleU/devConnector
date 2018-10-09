@@ -14,12 +14,13 @@ class Education extends Component {
 			<tr key={edu._id}>
 				<td>{edu.school}</td>
 				<td>{edu.degree}</td>
+				<td>{edu.fieldOfStudy}</td>
 				<td>
 					<Moment format="YYYY/MM/DD">{edu.from}</Moment>
 					{" - "}
 					{edu.current ? "Now" : <Moment format="YYYY/MM/DD">{edu.to}</Moment>}
 				</td>
-				<td>
+				<td style={{ textAlign: "right" }}>
 					<button onClick={() => this.onDeleteClick(edu._id)} className="btn btn-danger">
 						Delete
 					</button>
@@ -35,6 +36,7 @@ class Education extends Component {
 						<tr>
 							<th>School</th>
 							<th>Degree</th>
+							<th>Field of Study</th>
 							<th>Years</th>
 							<th />
 						</tr>

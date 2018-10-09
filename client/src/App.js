@@ -19,6 +19,7 @@ import CreateProfile from "./components/manage-profile/CreateProfile.js";
 import EditProfile from "./components/manage-profile/EditProfile.js";
 import AddExperience from "./components/add-credentials/AddExperience.js";
 import AddEducation from "./components/add-credentials/AddEducation.js";
+import Profiles from './components/profiles/Profiles';
 
 // import stylesheet
 import "./App.css";
@@ -53,11 +54,13 @@ class App extends Component {
 				<div className="container">
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/login" component={Login} />
+					<Route exact path="/profiles" component={Profiles} />
 					<PrivateRoute exact path="/dashboard" component={Dashboard} />
 					<PrivateRoute exact path="/create-profile" component={CreateProfile} />
 					<PrivateRoute exact path="/edit-profile" component={EditProfile} />
 					<PrivateRoute exact path="/add-experience" component={AddExperience} />
-					<PrivateRoute exact path="/add-education" component={AddEducation} />
+               <PrivateRoute exact path="/add-education" component={AddEducation} />
+               
 				</div>
 				<Footer />
 			</div>

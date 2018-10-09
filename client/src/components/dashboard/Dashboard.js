@@ -9,7 +9,7 @@ import Experience from "./Experience.js";
 import Education from "./Education.js";
 
 class Dashboard extends Component {
-	onDeleteClick = (event) => {
+	onDeleteClick = event => {
 		this.props.deleteAccount();
 	};
 
@@ -82,7 +82,7 @@ Dashboard.propTypes = {
 	profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
 	profile: state.profile,
 	auth: state.auth,
 });

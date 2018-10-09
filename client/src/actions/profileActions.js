@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
 	GET_CURRENT_PROFILE,
-	PROFILE_LOADING,
+	LOADING,
 	CLEAR_CURRENT_PROFILE,
 	GET_ERRORS,
 	SET_CURRENT_USER,
@@ -27,7 +27,7 @@ export const createProfile = (profileData, history) => dispatch => {
 
 // get current profile
 export const getCurrentProfile = () => dispatch => {
-	dispatch(setProfileLoading());
+	dispatch(setLoading());
 	axios
 		.get("api/profile")
 		.then(res => {
@@ -43,6 +43,26 @@ export const getCurrentProfile = () => dispatch => {
 				payload: {},
 			})
 		});
+};
+
+// get all profiles
+export const getProfiles = () => dispatch => {
+   dispatch(setLoading());
+   axios
+      .get("api/profile/all")
+      .then(res => {
+         dispatch({
+            type: GET_PROFILES,
+            payload: res.data,
+         })
+      })
+      .catch(err => {
+         console.log("Errors:", err.response.data);
+         dispatch({
+            type: GET_PROFILES,
+            payload: null,
+         })
+      });
 };
 
 // add experience
@@ -142,9 +162,9 @@ export const deleteAccount = () => dispatch => {
 };
 
 // shows spinner when profile is loading
-export const setProfileLoading = () => {
+export const setLoading = () => {
 	return {
-		type: PROFILE_LOADING,
+		type: LOADING,
 	};
 };
 

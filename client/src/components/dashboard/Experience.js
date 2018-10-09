@@ -19,8 +19,8 @@ class Experience extends Component {
 					{" - "}
 					{exp.current ? "Now" : <Moment format="YYYY/MM/DD">{exp.to}</Moment>}
 				</td>
-				<td>
-               <button onClick={() => this.onDeleteClick(exp._id)} className="btn btn-danger">
+				<td style={{ textAlign: "right" }}>
+					<button onClick={() => this.onDeleteClick(exp._id)} className="btn btn-danger">
 						Delete
 					</button>
 				</td>
