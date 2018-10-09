@@ -4,7 +4,7 @@ import errorReducer from "./errorReducer.js";
 import profileReducer from "./profileReducer.js";
 
 export default combineReducers({
-   auth: authReducer,
-   errors: errorReducer,
-   profile: profileReducer,
+	auth: authReducer,
+	errors: errorReducer,
+	profile: profileReducer,
 });
