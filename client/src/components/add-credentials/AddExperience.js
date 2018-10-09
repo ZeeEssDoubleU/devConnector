@@ -36,13 +36,13 @@ class AddExperience extends Component {
 	onSubmit = (event) => {
 		event.preventDefault();
 		this.props.addExperience(this.state, this.props.history);
-   };
-   
-   componentWillReceiveProps (nextProps) {
-      if (nextProps.errors) {
-         this.setState({ errors: nextProps.errors});
-      }
-   }
+	};
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
 
 	render() {
 		const { errors } = this.state;
@@ -53,7 +53,7 @@ class AddExperience extends Component {
 					<div className="row">
 						<div className="col-md-8 m-auto">
 							<Link to="/dashboard" className="btn btn-light">
-								Go Back
+								&#8592; Go Back
 							</Link>
 							<h1 className="display-4 text-center">Add Experience</h1>
 							<p className="lead text-center">
@@ -82,7 +82,7 @@ class AddExperience extends Component {
 									onChange={this.onChange}
 									error={errors.location}
 								/>
-								<h6>From Date:</h6>
+								<h6>* From Date:</h6>
 								<TextFieldGroup
 									placeholder="* From"
 									name="from"
@@ -121,6 +121,7 @@ class AddExperience extends Component {
 									value={this.state.description}
 									onChange={this.onChange}
 									error={errors.description}
+									info="Tell us more about the position."
 								/>
 								<button type="submit" className="btn btn-info btn-block mt-4">
 									Submit

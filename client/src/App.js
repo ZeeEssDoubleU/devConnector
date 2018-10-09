@@ -18,6 +18,7 @@ import Dashboard from "./components/dashboard/Dashboard.js";
 import CreateProfile from "./components/manage-profile/CreateProfile.js";
 import EditProfile from "./components/manage-profile/EditProfile.js";
 import AddExperience from "./components/add-credentials/AddExperience.js";
+import AddEducation from "./components/add-credentials/AddEducation.js";
 
 // import stylesheet
 import "./App.css";
@@ -56,6 +57,7 @@ class App extends Component {
 					<PrivateRoute exact path="/create-profile" component={CreateProfile} />
 					<PrivateRoute exact path="/edit-profile" component={EditProfile} />
 					<PrivateRoute exact path="/add-experience" component={AddExperience} />
+					<PrivateRoute exact path="/add-education" component={AddEducation} />
 				</div>
 				<Footer />
 			</div>
