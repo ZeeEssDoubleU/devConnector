@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const prependHttp = require("prepend-http");
 
 // load validations
 const validateProfileInput = require("../../validation/profile.js");
@@ -98,12 +99,20 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
 	}
 
 	// get fields
-	const { skills, youtube, twitter, facebook, linkedin, instagram } = req.body;
+	const { skills, website, twitter, facebook, linkedin, youtube, instagram } = req.body;
+
 	const profileFields = {
 		...req.body,
 		user: req.user.id,
 		skills: skills.split(","),
-		social: { twitter, facebook, linkedin, instagram, youtube },
+		website: prependHttp(website, { https: true }),
+		social: {
+			twitter: prependHttp(twitter, { https: true }),
+			facebook: prependHttp(facebook, { https: true }),
+			linkedin: prependHttp(linkedin, { https: true }),
+			instagram: prependHttp(instagram, { https: true }),
+			youtube: prependHttp(youtube, { https: true }),
+		},
 	};
 
 	Profile.findOne({ user: req.user.id }).then(profile => {

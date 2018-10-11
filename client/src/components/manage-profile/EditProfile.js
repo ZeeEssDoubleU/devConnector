@@ -49,7 +49,7 @@ class EditProfile extends Component {
          const { skills, social, ...profile } = nextProps.profile.profile;
          // check to see if profile has social links
          const socialEmpty = Object.keys(social).every(key => {
-            return social[key].length <= 0;
+            return social[key] === '';
          });
 
 			this.setState({
