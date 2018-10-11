@@ -1,6 +1,6 @@
 import {
 	LOADING,
-	GET_CURRENT_PROFILE,
+	GET_PROFILE,
 	PROFILE_NOT_FOUND,
 	CLEAR_CURRENT_PROFILE,
 	GET_PROFILES,
@@ -19,7 +19,7 @@ const profileReducer = (state = initialState, action) => {
 				...state,
 				loading: true,
 			};
-		case GET_CURRENT_PROFILE:
+		case GET_PROFILE:
 			return {
 				...state,
 				profile: action.payload,

@@ -29,7 +29,7 @@ class EditProfile extends Component {
 		};
 	}
 
-	onChange = (event) => {
+	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value,
 		});
@@ -46,10 +46,14 @@ class EditProfile extends Component {
 
 		if (nextProps.profile.profile) {
 			// pull profile data from app (not component) profile state
-			const { skills, social, ...profile } = nextProps.profile.profile;
+         const { skills, social, ...profile } = nextProps.profile.profile;
+         // check to see if profile has social links
+         const socialEmpty = Object.keys(social).every(key => {
+            return social[key].length <= 0;
+         });
 
 			this.setState({
-				displaySocialInputs: social ? true : false, // display social inputs if social exists
+				displaySocialInputs: !socialEmpty, // display social inputs if social exists
 				skills: skills.join(","), // write over skills (convert array to CSV)
 				...social, // write over social
 				...profile, // write over the rest of the profile component state
@@ -57,8 +61,10 @@ class EditProfile extends Component {
 		}
 	}
 
-	onSubmit = (event) => {
-      event.preventDefault();
+	onSubmit = event => {
+		event.preventDefault();
+
+		console.log("onSubmit state:", this.state);
 		// call createProfile action.  Don't have to import withRouter for history, because withRouter already imported to PrivateRoute.
 		this.props.createProfile(this.state, this.props.history);
 	};
@@ -240,7 +246,7 @@ EditProfile.propTypes = {
 	errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
 	profile: state.profile,
 	errors: state.errors,
 });

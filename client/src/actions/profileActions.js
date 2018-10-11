@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-	GET_CURRENT_PROFILE,
+	GET_PROFILE,
 	LOADING,
 	CLEAR_CURRENT_PROFILE,
 	GET_ERRORS,
@@ -21,7 +21,7 @@ export const createProfile = (profileData, history) => dispatch => {
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data,
-			})
+			});
 		});
 };
 
@@ -29,40 +29,61 @@ export const createProfile = (profileData, history) => dispatch => {
 export const getCurrentProfile = () => dispatch => {
 	dispatch(setLoading());
 	axios
-		.get("api/profile")
+		.get("/api/profile")
 		.then(res => {
 			dispatch({
-				type: GET_CURRENT_PROFILE,
+				type: GET_PROFILE,
 				payload: res.data,
-			})
+			});
 		})
 		.catch(err => {
 			console.log("Errors:", err.response.data);
 			dispatch({
-				type: GET_CURRENT_PROFILE,
+				type: GET_PROFILE,
 				payload: {},
-			})
+			});
+		});
+};
+
+// get profile by handle
+export const getProfileByHandle = handle => dispatch => {
+	dispatch(setLoading());
+	axios
+		.get(`/api/profile/handle/${handle}`)
+		.then(res => {
+			console.log("THING:", res.data);
+			dispatch({
+				type: GET_PROFILE,
+				payload: res.data,
+			});
+		})
+		.catch(err => {
+			console.log("Errors:", err.response.data);
+			dispatch({
+				type: GET_PROFILE,
+				payload: null,
+			});
 		});
 };
 
 // get all profiles
 export const getProfiles = () => dispatch => {
-   dispatch(setLoading());
-   axios
-      .get("api/profile/all")
-      .then(res => {
-         dispatch({
-            type: GET_PROFILES,
-            payload: res.data,
-         })
-      })
-      .catch(err => {
-         console.log("Errors:", err.response.data);
-         dispatch({
-            type: GET_PROFILES,
-            payload: null,
-         })
-      });
+	dispatch(setLoading());
+	axios
+		.get("/api/profile/all")
+		.then(res => {
+			dispatch({
+				type: GET_PROFILES,
+				payload: res.data,
+			});
+		})
+		.catch(err => {
+			console.log("Errors:", err.response.data);
+			dispatch({
+				type: GET_PROFILES,
+				payload: null,
+			});
+		});
 };
 
 // add experience
@@ -78,7 +99,7 @@ export const addExperience = (expData, history) => dispatch => {
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data,
-			})
+			});
 		});
 };
 
@@ -95,7 +116,7 @@ export const addEducation = (eduData, history) => dispatch => {
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data,
-			})
+			});
 		});
 };
 
@@ -106,16 +127,16 @@ export const deleteExperience = id => dispatch => {
 		.then(res => {
 			console.log("Experience deleted:", res.data);
 			dispatch({
-				type: GET_CURRENT_PROFILE,
+				type: GET_PROFILE,
 				payload: res.data,
-			})
+			});
 		})
 		.catch(err => {
 			console.log("Errors:", err.response.data);
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data,
-			})
+			});
 		});
 };
 
@@ -126,16 +147,16 @@ export const deleteEducation = id => dispatch => {
 		.then(res => {
 			console.log("Education deleted:", res.data);
 			dispatch({
-				type: GET_CURRENT_PROFILE,
+				type: GET_PROFILE,
 				payload: res.data,
-			})
+			});
 		})
 		.catch(err => {
 			console.log("Errors:", err.response.data);
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data,
-			})
+			});
 		});
 };
 
@@ -149,14 +170,14 @@ export const deleteAccount = () => dispatch => {
 				dispatch({
 					type: SET_CURRENT_USER,
 					payload: {},
-				})
+				});
 			})
 			.catch(err => {
 				console.log("Errors:", err.response.data);
 				dispatch({
 					type: GET_ERRORS,
 					payload: err.response.data,
-				})
+				});
 			});
 	}
 };
