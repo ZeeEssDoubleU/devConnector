@@ -3,9 +3,33 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
+const prependHttp = require("prepend-http");
+
 class ProfileHeader extends Component {
 	render() {
-      const { profile } = this.props;
+		const { profile } = this.props;
+		const { website, social } = profile;
+		const urls = { website, ...social }; // collect all urls into single object
+
+		// collect each url key/value from the urls object
+		// url[0] = key, url[1] = value (used below)
+		Object.entries(urls).forEach(url => {
+			// reformat and reassign each url value to its respective key in the urls object
+			urls[url[0]] = url[1] === "" ? "" : prependHttp(url[1], { https: true });
+		});
+
+		// map urls to icons
+		const urlIcons = Object.entries(urls) // collect each url key/value
+			.filter(url => url[1].length > 0) // filter out all empty values
+			.map((url, index) => (
+				<a key={index} className="text-white p-2" href={url[1]} target="_blank">
+					{url[0] === "website" ? (
+						<i className="fas fa-globe fa-2x" />
+					) : (
+						<i className={`fab fa-${url[0]} fa-2x`} />
+					)}
+				</a>
+			));
 
 		return (
 			<div className="row">
@@ -23,53 +47,7 @@ class ProfileHeader extends Component {
 								{profile.company ? <span>at {profile.company}</span> : null}
 							</p>
 							{profile.location ? <p>{profile.location}</p> : null}
-							<p>
-								{profile.website === "" ? null : (
-									<a className="text-white p-2" href={profile.website} target="_blank">
-										<i className="fas fa-globe fa-2x" />
-									</a>
-								)}
-								{profile.social.twitter === "" ? null : (
-									<a
-										className="text-white p-2"
-										href={profile.social.twitter}
-										target="_blank">
-										<i className="fab fa-twitter fa-2x" />
-									</a>
-								)}
-								{profile.social.facebook === "" ? null : (
-									<a
-										className="text-white p-2"
-										href={profile.social.facebook}
-										target="_blank">
-										<i className="fab fa-facebook fa-2x" />
-									</a>
-								)}
-								{profile.social.linkedin === "" ? null : (
-									<a
-										className="text-white p-2"
-										href={profile.social.linkedin}
-										target="_blank">
-										<i className="fab fa-linkedin fa-2x" />
-									</a>
-								)}
-								{profile.social.youtube === "" ? null : (
-									<a
-										className="text-white p-2"
-										href={profile.social.youtube}
-										target="_blank">
-										<i className="fab fa-youtube fa-2x" />
-									</a>
-								)}
-								{profile.social.instagram === "" ? null : (
-									<a
-										className="text-white p-2"
-										href={profile.social.instagram}
-										target="_blank">
-										<i className="fab fa-instagram fa-2x" />
-									</a>
-								)}
-							</p>
+							<p>{urlIcons}</p>
 						</div>
 					</div>
 				</div>
@@ -78,7 +56,9 @@ class ProfileHeader extends Component {
 	}
 }
 
-ProfileHeader.propTypes = {};
+ProfileHeader.propTypes = {
+	profile: PropTypes.object.isRequired,
+};
 
 ProfileHeader = withRouter(connect()(ProfileHeader));
 

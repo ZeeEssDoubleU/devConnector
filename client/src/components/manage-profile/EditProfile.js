@@ -46,11 +46,9 @@ class EditProfile extends Component {
 
 		if (nextProps.profile.profile) {
 			// pull profile data from app (not component) profile state
-         const { skills, social, ...profile } = nextProps.profile.profile;
-         // check to see if profile has social links
-         const socialEmpty = Object.keys(social).every(key => {
-            return social[key] === '';
-         });
+			const { skills, social, ...profile } = nextProps.profile.profile;
+			// check to see if profile has social links
+			const socialEmpty = Object.keys(social).every(key => social[key] === "");
 
 			this.setState({
 				displaySocialInputs: !socialEmpty, // display social inputs if social exists

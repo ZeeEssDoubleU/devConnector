@@ -99,20 +99,13 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
 	}
 
 	// get fields
-	const { skills, website, twitter, facebook, linkedin, youtube, instagram } = req.body;
+   const { skills, twitter, facebook, linkedin, youtube, instagram } = req.body;
 
 	const profileFields = {
 		...req.body,
 		user: req.user.id,
 		skills: skills.split(","),
-		website: prependHttp(website, { https: true }),
-		social: {
-			twitter: prependHttp(twitter, { https: true }),
-			facebook: prependHttp(facebook, { https: true }),
-			linkedin: prependHttp(linkedin, { https: true }),
-			instagram: prependHttp(instagram, { https: true }),
-			youtube: prependHttp(youtube, { https: true }),
-		},
+		social: { twitter, facebook, linkedin, instagram, youtube },
 	};
 
 	Profile.findOne({ user: req.user.id }).then(profile => {

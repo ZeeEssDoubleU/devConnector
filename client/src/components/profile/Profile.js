@@ -34,10 +34,12 @@ class Profile extends Component {
 							</Link>
 						</div>
 					</div>
-					<ProfileHeader profile={profile}/>
-					<ProfileAbout />
-					<ProfileCreds />
-					<ProfileGithub />
+					<ProfileHeader profile={profile} />
+					<ProfileAbout profile={profile} />
+					<ProfileCreds education={profile.education} experience={profile.experience} />
+					{profile.githubUserName === "" ? null : (
+						<ProfileGithub userName={profile.githubUserName} />
+					)}
 				</div>
 			);
 		}
