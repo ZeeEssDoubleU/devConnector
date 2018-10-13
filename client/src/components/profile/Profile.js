@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
+// import components
 import ProfileHeader from "./ProfileHeader.js";
 import ProfileAbout from "./ProfileAbout.js";
 import ProfileCreds from "./ProfileCreds.js";
@@ -16,7 +16,13 @@ class Profile extends Component {
 		if (this.props.match.params.handle) {
 			this.props.getProfileByHandle(this.props.match.params.handle);
 		}
-	}
+   }
+   
+   componentWillReceiveProps(nextProps) {
+      if(nextProps.profile.profile === null && this.props.profile.loading) {
+         this.props.history.push('/not-found');
+      }
+   }
 
 	render() {
 		const { profile, loading } = this.props.profile;

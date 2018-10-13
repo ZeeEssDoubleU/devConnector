@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+// import components
 import TextFieldGroup from "../common/TextFieldGroup.js";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup.js";
 import InputGroup from "../common/InputGroup.js";
 import SelectListGroup from "../common/SelectListGroup.js";
-import * as profileActions from "../../actions/profileActions.js";
+// import actions
+import { createProfile } from "../../actions/profileActions.js";
+import { getCurrentProfile } from "../../actions/profileActions.js";
 
 class EditProfile extends Component {
 	constructor(props) {
@@ -251,7 +254,7 @@ const mapStateToProps = state => ({
 
 EditProfile = connect(
 	mapStateToProps,
-	{ ...profileActions },
+	{ createProfile, getCurrentProfile },
 )(EditProfile);
 
 export default EditProfile;

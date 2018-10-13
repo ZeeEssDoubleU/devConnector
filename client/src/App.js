@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Route, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken.js";
-import * as authActions from "./actions/authActions.js";
-import * as profileActions from "./actions/profileActions.js";
-
+// import actions
+import { clearCurrentProfile } from "./actions/profileActions.js";
+import { logoutUser } from "./actions/authActions.js";
+import { setCurrentUser } from "./actions/authActions.js";
 // import components
 import PrivateRoute from "./components/common/PrivateRoute.js";
 import Navbar from "./components/layout/Navbar.js";
@@ -19,8 +20,9 @@ import CreateProfile from "./components/manage-profile/CreateProfile.js";
 import EditProfile from "./components/manage-profile/EditProfile.js";
 import AddExperience from "./components/add-credentials/AddExperience.js";
 import AddEducation from "./components/add-credentials/AddEducation.js";
-import Profiles from './components/profiles/Profiles';
-import Profile from './components/profile/Profile';
+import Profiles from "./components/profiles/Profiles.js";
+import Profile from "./components/profile/Profile.js";
+import NotFound from "./components/not-found/NotFound.js";
 
 // import stylesheet
 import "./App.css";
@@ -53,16 +55,18 @@ class App extends Component {
 				<Navbar />
 				<Route exact path="/" component={Landing} />
 				<div className="container">
-					<Route exact path="/register" component={Register} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/profiles" component={Profiles} />
-					<Route exact path="/profile/:handle" component={Profile} />
-					<PrivateRoute exact path="/dashboard" component={Dashboard} />
-					<PrivateRoute exact path="/create-profile" component={CreateProfile} />
-					<PrivateRoute exact path="/edit-profile" component={EditProfile} />
-					<PrivateRoute exact path="/add-experience" component={AddExperience} />
-               <PrivateRoute exact path="/add-education" component={AddEducation} />
-               
+					<Switch>
+						<Route exact path="/register" component={Register} />
+						<Route exact path="/login" component={Login} />
+						<Route exact path="/profiles" component={Profiles} />
+						<Route exact path="/profile/:handle" component={Profile} />
+						<PrivateRoute exact path="/dashboard" component={Dashboard} />
+						<PrivateRoute exact path="/create-profile" component={CreateProfile} />
+						<PrivateRoute exact path="/edit-profile" component={EditProfile} />
+						<PrivateRoute exact path="/add-experience" component={AddExperience} />
+						<PrivateRoute exact path="/add-education" component={AddEducation} />
+						<Route component={NotFound} />
+					</Switch>
 				</div>
 				<Footer />
 			</div>
@@ -71,14 +75,15 @@ class App extends Component {
 }
 
 App.propTypes = {
+	clearCurrentProfile: PropTypes.func.isRequired,
+	logoutUser: PropTypes.func,
 	setCurrentUser: PropTypes.func,
-	logoutUser: PropTypes.func.isRequired,
 };
 
 App = withRouter(
 	connect(
 		null,
-		{ ...authActions, ...profileActions },
+		{ clearCurrentProfile, logoutUser, setCurrentUser },
 	)(App),
 );
 

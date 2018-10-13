@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import * as authActions from "../../actions/authActions.js";
+// import actions
+import { loginUser } from "../../actions/authActions.js";
+// import components
 import TextFieldGroup from "../common/TextFieldGroup.js";
 
 class Login extends Component {
@@ -14,13 +16,13 @@ class Login extends Component {
 		};
 	}
 
-	onChange = (event) => {
+	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value,
 		});
 	};
 
-	onSubmit = (event) => {
+	onSubmit = event => {
 		event.preventDefault();
 		const User = {
 			email: this.state.email,
@@ -91,14 +93,14 @@ Login.propTypes = {
 	errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
 	auth: state.auth,
 	errors: state.errors,
 });
 
 Login = connect(
 	mapStateToProps,
-	authActions,
+	{ loginUser },
 )(Login);
 
 export default Login;

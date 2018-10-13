@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner.js";
-import * as profileActions from "../../actions/profileActions.js";
+// import actions
+import { getCurrentProfile } from "../../actions/profileActions.js";
+import { deleteAccount } from "../../actions/profileActions.js";
+// import components
 import ProfileActions from "./ProfileActions.js";
 import Experience from "./Experience.js";
 import Education from "./Education.js";
@@ -89,7 +92,7 @@ const mapStateToProps = state => ({
 
 Dashboard = connect(
 	mapStateToProps,
-	profileActions,
+	{ getCurrentProfile, deleteAccount },
 )(Dashboard);
 
 export default Dashboard;

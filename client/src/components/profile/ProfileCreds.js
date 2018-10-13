@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
 
 class ProfileCreds extends Component {
 	render() {
-      const { experience, education } = this.props;
-      
+		const { experience, education } = this.props;
+
 		// experience section items
 		const expItems = experience.map(exp => (
 			<li key={exp._id} className="list-group-item">
@@ -86,8 +84,9 @@ class ProfileCreds extends Component {
 	}
 }
 
-ProfileCreds.propTypes = {};
-
-ProfileCreds = withRouter(connect()(ProfileCreds));
+ProfileCreds.propTypes = {
+	education: PropTypes.array.isRequired,
+	experience: PropTypes.array.isRequired,
+};
 
 export default ProfileCreds;

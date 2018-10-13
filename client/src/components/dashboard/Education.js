@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
-import * as profileActions from "../../actions/profileActions";
+// import actions
+import { deleteEducation } from "../../actions/profileActions";
 
 class Education extends Component {
 	onDeleteClick = id => {
@@ -54,7 +55,7 @@ Education.propTypes = {
 
 Education = connect(
 	null,
-	{ ...profileActions },
+	{ deleteEducation },
 )(Education);
 
 export default Education;

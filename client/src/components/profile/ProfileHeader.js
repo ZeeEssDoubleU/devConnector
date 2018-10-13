@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const prependHttp = require("prepend-http");
@@ -59,7 +57,5 @@ class ProfileHeader extends Component {
 ProfileHeader.propTypes = {
 	profile: PropTypes.object.isRequired,
 };
-
-ProfileHeader = withRouter(connect()(ProfileHeader));
 
 export default ProfileHeader;

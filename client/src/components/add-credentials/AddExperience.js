@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+// import components
 import TextFieldGroup from "../common/TextFieldGroup.js";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup.js";
-import * as profileActions from "../../actions/profileActions.js";
+// import actions
+import {addExperience} from "../../actions/profileActions.js";
 
 class AddExperience extends Component {
 	constructor(props) {
@@ -149,7 +151,7 @@ const mapStateToProps = (state) => ({
 AddExperience = withRouter(
 	connect(
 		mapStateToProps,
-		profileActions,
+		{ addExperience },
 	)(AddExperience),
 );
 

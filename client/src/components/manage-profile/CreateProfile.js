@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+// import components
 import TextFieldGroup from "../common/TextFieldGroup.js";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup.js";
 import InputGroup from "../common/InputGroup.js";
 import SelectListGroup from "../common/SelectListGroup.js";
-import * as profileActions from "../../actions/profileActions.js";
+// import actions
+import { createProfile } from "../../actions/profileActions.js";
 
 class CreateProfile extends Component {
 	constructor(props) {
@@ -29,7 +31,7 @@ class CreateProfile extends Component {
 		};
 	}
 
-	onChange = (event) => {
+	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value,
 		});
@@ -41,7 +43,7 @@ class CreateProfile extends Component {
 		}
 	}
 
-	onSubmit = (event) => {
+	onSubmit = event => {
 		event.preventDefault();
 		// call createProfile action.  Don't have to import withRouter for history, because withRouter already imported to PrivateRoute.
 		this.props.createProfile(this.state, this.props.history);
@@ -221,18 +223,19 @@ class CreateProfile extends Component {
 }
 
 CreateProfile.propTypes = {
+   createProfile: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
 	profile: state.profile,
 	errors: state.errors,
 });
 
 CreateProfile = connect(
 	mapStateToProps,
-	{ ...profileActions },
+   { createProfile },
 )(CreateProfile);
 
 export default CreateProfile;
