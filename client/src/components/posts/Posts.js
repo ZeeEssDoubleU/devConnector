@@ -11,7 +11,7 @@ import { getPosts } from "../../actions/postActions.js";
 class Posts extends Component {
 	componentDidMount() {
 		this.props.getPosts();
-	}
+   }
 
 	render() {
 		const { posts, loading } = this.props.post;

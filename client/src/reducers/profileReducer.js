@@ -1,5 +1,5 @@
 import {
-	LOADING,
+	PROFILE_LOADING,
 	GET_PROFILE,
 	PROFILE_NOT_FOUND,
 	CLEAR_CURRENT_PROFILE,
@@ -14,7 +14,7 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case LOADING:
+		case PROFILE_LOADING:
 			return {
 				...state,
 				loading: true,

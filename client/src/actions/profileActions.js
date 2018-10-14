@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
 	GET_PROFILE,
-	LOADING,
+	PROFILE_LOADING,
 	CLEAR_CURRENT_PROFILE,
 	GET_ERRORS,
 	SET_CURRENT_USER,
@@ -184,7 +184,7 @@ export const deleteAccount = () => dispatch => {
 // shows spinner when profile is loading
 export const setLoading = () => {
 	return {
-		type: LOADING,
+		type: PROFILE_LOADING,
 	};
 };
 

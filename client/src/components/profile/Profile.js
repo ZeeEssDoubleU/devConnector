@@ -8,21 +8,21 @@ import ProfileAbout from "./ProfileAbout.js";
 import ProfileCreds from "./ProfileCreds.js";
 import ProfileGithub from "./ProfileGithub.js";
 import Spinner from "../common/Spinner.js";
-
-import * as profileActions from "../../actions/profileActions.js";
+// import actions
+import { getProfileByHandle } from "../../actions/profileActions.js";
 
 class Profile extends Component {
 	componentDidMount() {
 		if (this.props.match.params.handle) {
 			this.props.getProfileByHandle(this.props.match.params.handle);
 		}
-   }
-   
-   componentWillReceiveProps(nextProps) {
-      if(nextProps.profile.profile === null && this.props.profile.loading) {
-         this.props.history.push('/not-found');
-      }
-   }
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.profile.profile === null && this.props.profile.loading) {
+			this.props.history.push("/not-found");
+		}
+	}
 
 	render() {
 		const { profile, loading } = this.props.profile;
@@ -73,7 +73,7 @@ const mapStateToProps = state => ({
 
 Profile = connect(
 	mapStateToProps,
-	{ ...profileActions },
+	{ getProfileByHandle },
 )(Profile);
 
 export default Profile;
