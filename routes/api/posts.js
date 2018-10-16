@@ -9,7 +9,7 @@ const validatePostInput = require('../../validation/post.js');
 const Post = require('../../models/Post.js');
 const Profile = require('../../models/Profile.js');
 
-// @route - GET api/posts
+// @route - GET /api/posts
 // @desc - get all posts
 // @access - public
 router.get('/',
@@ -22,7 +22,7 @@ router.get('/',
    }
 );
 
-// @route - GET api/posts/:id
+// @route - GET /api/posts/:id
 // @desc - get post by id
 // @access - public
 router.get('/:id',
@@ -34,7 +34,7 @@ router.get('/:id',
    }
 );
 
-// @route - POST api/posts
+// @route - POST /api/posts
 // @desc - create post
 // @access - private
 router.post('/', passport.authenticate('jwt', { session: false }),
@@ -60,7 +60,7 @@ router.post('/', passport.authenticate('jwt', { session: false }),
    }
 );
 
-// @route - DELETE api/posts/:id
+// @route - DELETE /api/posts/:id
 // @desc - delete post
 // @access - private
 router.delete('/:id', passport.authenticate('jwt', { session: false }),
@@ -84,7 +84,7 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }),
    }
 );
 
-// @route - POST api/posts/:id/like
+// @route - POST /api/posts/:id/like
 // @desc - like post
 // @access - private
 router.post('/:id/like', passport.authenticate('jwt', { session: false }),
@@ -107,7 +107,7 @@ router.post('/:id/like', passport.authenticate('jwt', { session: false }),
    }
 );
 
-// @route - POST api/posts/:id/unlike
+// @route - POST /api/posts/:id/unlike
 // @desc - unlike post
 // @access - private
 router.post('/:id/unlike', passport.authenticate('jwt', { session: false }),
@@ -133,7 +133,7 @@ router.post('/:id/unlike', passport.authenticate('jwt', { session: false }),
    }
 );
 
-// @route - POST api/posts/:id/comments
+// @route - POST /api/posts/:id/comments
 // @desc - add comment to post
 // @access - private
 router.post('/:id/comments', passport.authenticate('jwt', { session: false }),
@@ -167,7 +167,7 @@ router.post('/:id/comments', passport.authenticate('jwt', { session: false }),
    }
 );
 
-// @route - DELETE api/posts/:id/comments/:comment_id
+// @route - DELETE /api/posts/:id/comments/:comment_id
 // @desc - remove comment from post
 // @access - private
 router.delete('/:id/comments/:comment_id', passport.authenticate('jwt', { session: false }),

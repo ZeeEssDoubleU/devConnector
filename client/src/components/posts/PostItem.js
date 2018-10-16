@@ -30,7 +30,7 @@ class PostItem extends Component {
 	};
 
 	render() {
-		const { post, auth } = this.props;
+		const { auth, post, showActions } = this.props;
 
 		return (
 			<div className="card card-body mb-3">
@@ -71,8 +71,8 @@ class PostItem extends Component {
 								<i className="text-secondary fas fa-thumbs-down" />
 							</button>
 
-							{/* render if url has id param */}
-							{this.props.match.params.id ? null : (
+							{/* render if showActions prop is true */}
+							{showActions ? (
 								<span>
 									<Link to={`/post/${post._id}`} className="btn btn-info mr-1">
 										Comments {`(${post.comments.length})`}
@@ -86,7 +86,7 @@ class PostItem extends Component {
 										</button>
 									) : null}
 								</span>
-							)}
+							) : null}
 						</div>
 					</div>
 				</div>
@@ -95,12 +95,17 @@ class PostItem extends Component {
 	}
 }
 
+PostItem.defaultProps = {
+	showActions: true,
+};
+
 PostItem.propTypes = {
 	likePost: PropTypes.func.isRequired,
 	unlikePost: PropTypes.func.isRequired,
 	deletePost: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	post: PropTypes.object.isRequired,
+	showActions: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({

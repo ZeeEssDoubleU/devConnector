@@ -5,6 +5,8 @@ import {
 	POST_LOADING,
 	DELETE_POST,
 	UPDATE_LIKE,
+	ADD_COMMENT,
+	DELETE_COMMENT,
 } from "../actions/types.js";
 
 const initialState = {
@@ -29,8 +31,8 @@ const postReducer = (state = initialState, action) => {
 		case GET_POST:
 			return {
 				...state,
-            post: action.payload,
-            loading: false,
+				post: action.payload,
+				loading: false,
 			};
 		case ADD_POST:
 			return {
@@ -38,15 +40,20 @@ const postReducer = (state = initialState, action) => {
 				posts: [action.payload, ...state.posts],
 			};
 		case DELETE_POST:
-			console.log("POSSTS:", state);
 			return {
 				...state,
 				posts: state.posts.filter(post => post._id !== action.payload._id),
 			};
+		case ADD_COMMENT:
+			return {
+				...state,
+				post: action.payload,
+			};
+		// case DELETE_COMMENT:
 		case UPDATE_LIKE:
 			return {
-            ...state,
-            post: action.payload,
+				...state,
+				post: action.payload,
 				posts: state.posts.map(post => {
 					if (post._id === action.payload._id) {
 						return action.payload;

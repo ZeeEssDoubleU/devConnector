@@ -2,10 +2,12 @@ import axios from "axios";
 import {
 	ADD_POST,
 	GET_ERRORS,
-   GET_POSTS,
-   GET_POST,
+	GET_POSTS,
+	GET_POST,
 	POST_LOADING,
-	DELETE_POST,
+   DELETE_POST,
+   ADD_COMMENT,
+   DELETE_COMMENT,
 	UPDATE_LIKE,
 } from "./types.js";
 
@@ -31,10 +33,10 @@ export const getPosts = () => dispatch => {
 };
 
 // get post
-export const getPost = (id) => dispatch => {
+export const getPost = postId => dispatch => {
 	dispatch(setPostLoading());
 	axios
-		.get(`/api/posts/${id}`)
+		.get(`/api/posts/${postId}`)
 		.then(res => {
 			console.log("Post:", res.data);
 			dispatch({
@@ -72,9 +74,9 @@ export const addPost = postData => dispatch => {
 };
 
 // delete post
-export const deletePost = id => dispatch => {
+export const deletePost = postId => dispatch => {
 	axios
-		.delete(`/api/posts/${id}`)
+		.delete(`/api/posts/${postId}`)
 		.then(res => {
 			console.log("Post deleted:", res.data);
 			dispatch({
@@ -91,10 +93,30 @@ export const deletePost = id => dispatch => {
 		});
 };
 
-// add like
-export const likePost = id => dispatch => {
+// add comment
+export const addComment = (commentData, postId) => dispatch => {
 	axios
-		.post(`/api/posts/${id}/like`)
+		.post(`/api/posts/${postId}/comments`, commentData)
+		.then(res => {
+			console.log("Comment added:", res.data);
+			dispatch({
+				type: ADD_COMMENT,
+				payload: res.data,
+			});
+		})
+		.catch(err => {
+			console.log("Errors:", err.response.data);
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data,
+			});
+		});
+};
+
+// add like
+export const likePost = postId => dispatch => {
+	axios
+		.post(`/api/posts/${postId}/like`)
 		.then(res => {
 			console.log("Post liked:", res.data);
 			dispatch({
@@ -112,9 +134,9 @@ export const likePost = id => dispatch => {
 };
 
 // remove like
-export const unlikePost = id => dispatch => {
+export const unlikePost = postId => dispatch => {
 	axios
-		.post(`/api/posts/${id}/unlike`)
+		.post(`/api/posts/${postId}/unlike`)
 		.then(res => {
 			console.log("Post unliked:", res.data);
 			dispatch({
