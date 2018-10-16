@@ -14,35 +14,35 @@
 
 <body>
   <!-- Navbar (Signed in) -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-    <div class="container">
-      <a class="navbar-brand" href="landing.html">DevConnector</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
-        <span class="navbar-toggler-icon"></span>
+  <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+    <div className="container">
+      <a className="navbar-brand" href="landing.html">DevConnector</a>
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+        <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="mobile-nav">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="profiles.html"> Developers
+      <div className="collapse navbar-collapse" id="mobile-nav">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="profiles.html"> Developers
             </a>
           </li>
         </ul>
 
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="feed.html">
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="feed.html">
               Post Feed
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="dashboard.html">
+          <li className="nav-item">
+            <a className="nav-link" href="dashboard.html">
               Dashboard
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <img class="rounded-circle" style="width: 25px;margin-right:5px" src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
+          <li className="nav-item">
+            <a className="nav-link" href="#">
+              <img className="rounded-circle" style="width: 25px;margin-right:5px" src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
                 alt="" title="You must have a Gravatar connected to your email to display an image" /> Logout
             </a>
           </li>
@@ -52,56 +52,56 @@
   </nav>
 
 
-  <div class="feed">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
+  <div className="feed">
+    <div className="container">
+      <div className="row">
+        <div className="col-md-12">
           <!-- Post Form -->
-          <div class="post-form mb-3">
-            <div class="card card-info">
-              <div class="card-header bg-info text-white">
+          <div className="post-form mb-3">
+            <div className="card card-info">
+              <div className="card-header bg-info text-white">
                 Say Somthing...
               </div>
-              <div class="card-body">
+              <div className="card-body">
                 <form>
-                  <div class="form-group">
-                    <textarea class="form-control form-control-lg" placeholder="Create a post"></textarea>
+                  <div className="form-group">
+                    <textarea className="form-control form-control-lg" placeholder="Create a post"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-dark">Submit</button>
+                  <button type="submit" className="btn btn-dark">Submit</button>
                 </form>
               </div>
             </div>
           </div>
 
           <!-- Post Feed -->
-          <div class="posts">
+          <div className="posts">
             <!-- Post Item -->
-            <div class="card card-body mb-3">
-              <div class="row">
-                <div class="col-md-2">
+            <div className="card card-body mb-3">
+              <div className="row">
+                <div className="col-md-2">
                   <a href="profile.html">
-                    <img class="rounded-circle d-none d-md-block" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+                    <img className="rounded-circle d-none d-md-block" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
                       alt="" />
                   </a>
                   <br />
-                  <p class="text-center">John Doe</p>
+                  <p className="text-center">John Doe</p>
                 </div>
-                <div class="col-md-10">
-                  <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint possimus corporis sunt necessitatibus! Minus
+                <div className="col-md-10">
+                  <p className="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint possimus corporis sunt necessitatibus! Minus
                     nesciunt soluta suscipit nobis. Amet accusamus distinctio cupiditate blanditiis dolor? Illo perferendis
                     eveniet cum cupiditate aliquam?</p>
-                  <button type="button" class="btn btn-light mr-1">
-                    <i class="text-info fas fa-thumbs-up"></i>
-                    <span class="badge badge-light">4</span>
+                  <button type="button" className="btn btn-light mr-1">
+                    <i className="text-info fas fa-thumbs-up"></i>
+                    <span className="badge badge-light">4</span>
                   </button>
-                  <button type="button" class="btn btn-light mr-1">
-                    <i class="text-secondary fas fa-thumbs-down"></i>
+                  <button type="button" className="btn btn-light mr-1">
+                    <i className="text-secondary fas fa-thumbs-down"></i>
                   </button>
-                  <a href="post.html" class="btn btn-info mr-1">
+                  <a href="post.html" className="btn btn-info mr-1">
                     Comments
                   </a>
-                  <!-- <button type="button" class="btn btn-danger mr-1">
-                    <i class="fas fa-times" />
+                  <!-- <button type="button" className="btn btn-danger mr-1">
+                    <i className="fas fa-times" />
                   </button> -->
                 </div>
               </div>
@@ -115,7 +115,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-dark text-white mt-5 p-4 text-center">
+  <footer className="bg-dark text-white mt-5 p-4 text-center">
     Copyright &copy; 2018 Dev Connector
   </footer>
 

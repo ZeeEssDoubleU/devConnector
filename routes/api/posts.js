@@ -10,7 +10,7 @@ const Post = require('../../models/Post.js');
 const Profile = require('../../models/Profile.js');
 
 // @route - GET api/posts
-// @desc - get posts
+// @desc - get all posts
 // @access - public
 router.get('/',
    (req, res) => {
@@ -75,8 +75,8 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }),
 
             // delete
             post.remove()
-               .then(() => {
-                  res.json({ success: true });
+               .then(post => {
+                  res.json(post);
                })
          })
          .catch(err => res.status(404)

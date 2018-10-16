@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 // import components
 import PostForm from "./PostForm.js";
-import PostFeed from './PostFeed.js';
+import PostFeed from "./PostFeed.js";
 import Spinner from "../common/Spinner.js";
 // import actions
 import { getPosts } from "../../actions/postActions.js";
@@ -11,10 +11,10 @@ import { getPosts } from "../../actions/postActions.js";
 class Posts extends Component {
 	componentDidMount() {
 		this.props.getPosts();
-   }
+	}
 
 	render() {
-		const { posts, loading } = this.props.post;
+		const { posts, loading } = this.props.posting;
 		let postContent;
 
 		if (posts === null || loading) {
@@ -40,11 +40,11 @@ class Posts extends Component {
 
 Posts.propTypes = {
 	getPosts: PropTypes.func.isRequired,
-	post: PropTypes.object.isRequired,
+	posting: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	post: state.post,
+	posting: state.posting,
 });
 
 Posts = connect(
