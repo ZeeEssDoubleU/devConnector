@@ -8,8 +8,8 @@ const validateExperienceInput = require("../../validation/experience.js");
 const validateEducationInput = require("../../validation/education.js");
 
 // load models
-const Profile = require("../../models/Profile.js");
-const User = require("../../models/User.js");
+const User = require("../../models/Users.js");
+const Profile = require("../../models/Profiles.js");
 
 // @route - GET api/profile
 // @desc - get current user's profile
@@ -18,7 +18,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => 
 	const errors = {};
 
 	Profile.findOne({ user: req.user.id })
-		.populate("user", ["name", "avatar"])
+		.populate("User", ["name", "avatar"])
 		.then(profile => {
 			if (!profile) {
 				errors.noProfile = "There is no profile for this user.";
@@ -35,7 +35,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => 
 router.get("/all", (req, res) => {
 	const errors = {};
 	Profile.find()
-		.populate("user", ["name", "avatar"])
+		.populate("User", ["name", "avatar"])
 		.then(profiles => {
 			if (!profiles) {
 				errors.noProfiles = "There are no profiles.";
@@ -54,7 +54,7 @@ router.get("/handle/:handle", (req, res) => {
 	const errors = {};
 
 	Profile.findOne({ handle: req.params.handle })
-		.populate("user", ["name", "avatar"])
+		.populate("User", ["name", "avatar"])
 		.then(profile => {
 			if (!profile) {
 				errors.noProfile = "There is no profile for this user.";
@@ -73,7 +73,7 @@ router.get("/user/:user_id", (req, res) => {
 	const errors = {};
 
 	Profile.findOne({ user: req.params.user_id })
-		.populate("user", ["name", "avatar"])
+		.populate("User", ["name", "avatar"])
 		.then(profile => {
 			if (!profile) {
 				errors.noProfile = "There is no profile for this user.";

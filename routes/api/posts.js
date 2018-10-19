@@ -6,8 +6,7 @@ const passport = require('passport');
 const validatePostInput = require('../../validation/post.js');
 
 // load models
-const Post = require('../../models/Post.js');
-const Profile = require('../../models/Profile.js');
+const Post = require('../../models/Posts.js');
 
 // @route - GET /api/posts
 // @desc - get all posts
