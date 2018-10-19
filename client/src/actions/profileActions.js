@@ -4,7 +4,8 @@ import {
 	PROFILE_LOADING,
 	CLEAR_CURRENT_PROFILE,
 	GET_ERRORS,
-	SET_CURRENT_USER,
+   SET_CURRENT_USER,
+   SET_USER_HANDLE,
 	GET_PROFILES,
 } from "./types.js";
 
@@ -14,6 +15,10 @@ export const createProfile = (profileData, history) => dispatch => {
 		.post("/api/profile", profileData)
 		.then(res => {
 			console.log("Profile created:", res.data);
+			dispatch({
+            type: SET_USER_HANDLE,
+				payload: res.data.handle,
+			});
 			history.push("/dashboard");
 		})
 		.catch(err => {

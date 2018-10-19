@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-
 // load validations
 const validateProfileInput = require("../../validation/profile.js");
 const validateExperienceInput = require("../../validation/experience.js");
 const validateEducationInput = require("../../validation/education.js");
-
 // load models
 const User = require("../../models/Users.js");
 const Profile = require("../../models/Profiles.js");
@@ -109,12 +107,21 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
 
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		if (profile) {
-			// update profile
+			// if profile exists, update profile
 			Profile.findOneAndUpdate(
-				{ user: req.user.id },
-				{ $set: profileFields },
-				{ new: true },
-			).then(profile => res.json(profile));
+            { user: req.user.id }, 
+            { $set: profileFields }, 
+            { new: true }
+         ).then(() =>
+            // also update user
+            User.findOneAndUpdate(
+               { _id: req.user.id },
+               // update user handle with profile handle
+               { $set: { handle: req.body.handle } },
+               { new: true },
+            ).then(profile => res.json(profile)),
+         )
+         .catch(err => res.json(err));
 		} else {
 			// create profile
 			// check if handle exists

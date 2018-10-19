@@ -1,6 +1,8 @@
 // auth action types
 export const GET_ERRORS = "GET_ERRORS";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SET_USER_HANDLE = "SET_USER_HANDLE";
+
 
 // profile actions types
 export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE";

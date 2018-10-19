@@ -1,5 +1,5 @@
 import isEmpty from "../validation/isEmpty.js";
-import { SET_CURRENT_USER } from "../actions/types.js";
+import { SET_CURRENT_USER, SET_USER_HANDLE } from "../actions/types.js";
 
 // authorize user reducer
 const initialState = {
@@ -15,6 +15,10 @@ const authReducer = (state = initialState, action) => {
 				isAuthenticated: !isEmpty(action.payload),
 				user: action.payload,
 			};
+		case SET_USER_HANDLE:
+			const newState = { ...state };
+			newState.user.handle = action.payload;
+			return newState;
 		default:
 			return state;
 	}

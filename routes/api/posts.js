@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-
 // load validations
 const validatePostInput = require('../../validation/post.js');
-
 // load models
 const Post = require('../../models/Posts.js');
 
