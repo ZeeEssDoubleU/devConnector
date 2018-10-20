@@ -31,9 +31,9 @@ class CommentItem extends Component {
 
 	render() {
 		const { auth, comment } = this.props;
-		const postId = this.props.match.params.id;
-		console.log("COMMENT AUTH", auth);
-		console.log("COMMENT", comment);
+      const postId = this.props.match.params.id;
+      console.log('POSTID', postId);
+      console.log('COMMENTID', comment._id);
 
 		return (
 			<div className="card card-body mb-3">

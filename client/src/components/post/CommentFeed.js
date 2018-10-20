@@ -6,7 +6,6 @@ import CommentItem from "./CommentItem.js";
 class CommentFeed extends Component {
 	render() {
 		const { comments } = this.props;
-		console.log("COMMENTS", comments);
 		const feedContent = comments.map(comment => (
 			<CommentItem key={comment._id} comment={comment} />
 		));

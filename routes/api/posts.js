@@ -4,19 +4,20 @@ const passport = require("passport");
 // load validations
 const validatePostInput = require("../../validation/post.js");
 // load models
-const User = require("../../models/Users.js");
+const Comment = require("../../models/Comments.js");
 const Post = require("../../models/Posts.js");
 
-/*****************************************/
 /***************** POSTS *****************/
-/*****************************************/
+/***************** POSTS *****************/
+/***************** POSTS *****************/
 
 // @route - GET /api/posts
 // @desc - get all posts
 // @access - public
 router.get("/", (req, res) => {
 	Post.find()
-		.sort({ date: -1 })
+      .sort({ date: -1 })
+      // populate posts' users
 		.populate("user", ["handle"])
 		.then(posts => res.json(posts))
 		.catch(err =>
@@ -31,7 +32,13 @@ router.get("/", (req, res) => {
 // @access - public
 router.get("/:id", (req, res) => {
 	Post.findById(req.params.id)
-		.populate("user", ["handle"])
+		// populate post user
+		.populate("user", "handle")
+		.populate({
+			// populate comments' users (nested)
+			path: "comments",
+			populate: { path: "user", select: "handle" },
+		})
 		.then(post => res.json(post))
 		.catch(err =>
 			res.status(404).json({
@@ -127,9 +134,9 @@ router.post("/:id/unlike", passport.authenticate("jwt", { session: false }), (re
 	});
 });
 
-/********************************************/
 /***************** COMMENTS *****************/
-/********************************************/
+/***************** COMMENTS *****************/
+/***************** COMMENTS *****************/
 
 // @route - POST /api/posts/:id/comments
 // @desc - add comment to post
@@ -145,17 +152,30 @@ router.post("/:id/comments", passport.authenticate("jwt", { session: false }), (
 
 	Post.findById(req.params.id)
 		.then(post => {
-			const newComment = {
+			const newComment = new Comment({
 				text: req.body.text,
 				name: req.body.name,
 				avatar: req.body.avatar,
 				user: req.user.id,
-			};
+			});
 
-			// add to comments array
-			post.comments.unshift(newComment);
-			//save post
-			post.save().then(post => res.json(post));
+			// save new comment
+			newComment.save().then(comment => {
+				// push comment into post comments array
+				post.comments.unshift(comment);
+				// save new post
+				post.save().then(post =>
+               Post.findById(post.id)
+                  // populate post user
+						.populate("user", "handle")
+						.populate({
+							// populate comments' users (nested)
+							path: "comments",
+							populate: { path: "user", select: "handle" },
+						})
+						.then(post => res.json(post)),
+				);
+			});
 		})
 		.catch(err =>
 			res.status(404).json({

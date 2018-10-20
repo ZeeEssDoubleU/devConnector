@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // create Schema
-const postSchema = new Schema({
+const commentSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
@@ -25,16 +25,10 @@ const postSchema = new Schema({
 			},
 		},
 	],
-	comments: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: "Comment",
-		},
-	],
 	date: {
 		type: Date,
 		default: Date.now,
 	},
 });
 
-module.exports = Post = mongoose.model("Post", postSchema, 'posts');
+module.exports = Comment = mongoose.model("Comment", commentSchema, 'comments');

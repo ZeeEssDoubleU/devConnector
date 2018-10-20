@@ -25,7 +25,6 @@ class CommentForm extends Component {
          text: this.state.text,
          name: user.name,
          avatar: user.avatar,
-         handle: user.handle,
       };
 
       this.props.addComment(newComment, postId);
