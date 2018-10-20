@@ -49,7 +49,12 @@ const postReducer = (state = initialState, action) => {
 				...state,
 				post: action.payload,
 			};
-		// case DELETE_COMMENT:
+		case DELETE_COMMENT:
+			return {
+				...state,
+				post: action.payload,
+				posts: state.posts.filter(post => post._id !== action.payload._id),
+			};
 		case UPDATE_LIKE:
 			return {
 				...state,

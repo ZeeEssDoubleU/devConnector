@@ -6,11 +6,13 @@ import PropTypes from "prop-types";
 import { getPost } from "../../actions/postActions.js";
 // import components
 import CommentForm from "./CommentForm";
+import CommentFeed from "./CommentFeed";
 import PostItem from "../posts/PostItem.js";
 import Spinner from "../common/Spinner.js";
 
 class Post extends Component {
 	componentDidMount() {
+		// get post by post id (url param)
 		this.props.getPost(this.props.match.params.id);
 	}
 
@@ -25,53 +27,7 @@ class Post extends Component {
 				<div>
 					<PostItem post={post} showActions={false} />
 					<CommentForm postId={post._id} />
-					{/* // Comment Feed */}
-					<div className="comments">
-						{/* // Comment Item */}
-						<div className="card card-body mb-3">
-							<div className="row">
-								<div className="col-md-2">
-									<a href="profile.html">
-										<img
-											className="rounded-circle d-none d-md-block"
-											src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
-											alt=""
-										/>
-									</a>
-									<br />
-									<p className="text-center">Kevin Smith</p>
-								</div>
-								<div className="col-md-10">
-									<p className="lead">
-										Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint possimus
-										corporis sunt necessitatibus! Minus nesciunt soluta suscipit nobis.
-									</p>
-								</div>
-							</div>
-						</div>
-						<div className="card card-body mb-3">
-							<div className="row">
-								<div className="col-md-2">
-									<a href="profile.html">
-										<img
-											className="rounded-circle d-none d-md-block"
-											src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
-											alt=""
-										/>
-									</a>
-									<br />
-									<p className="text-center">Karen Johnson</p>
-								</div>
-								<div className="col-md-10">
-									<p className="lead">
-										{" "}
-										Amet accusamus distinctio cupiditate blanditiis dolor? Illo
-										perferendis eveniet cum cupiditate aliquam?
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
+					<CommentFeed comments={post.comments} />
 				</div>
 			);
 		}

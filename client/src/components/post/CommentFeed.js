@@ -4,14 +4,19 @@ import PropTypes from "prop-types";
 import CommentItem from "./CommentItem.js";
 
 class CommentFeed extends Component {
-   render() {
-      const { posts } = this.props;
-      return posts.map(post => <CommentItem key={ post._id } post={ post } />);
-   }
+	render() {
+		const { comments } = this.props;
+		console.log("COMMENTS", comments);
+		const feedContent = comments.map(comment => (
+			<CommentItem key={comment._id} comment={comment} />
+		));
+
+		return <div className="comments">{feedContent}</div>;
+	}
 }
 
 CommentFeed.propTypes = {
-   posts: PropTypes.array.isRequired,
+	comments: PropTypes.array.isRequired,
 };
 
 export default CommentFeed;
