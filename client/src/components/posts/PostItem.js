@@ -30,14 +30,13 @@ class PostItem extends Component {
 	};
 
 	render() {
-      const { auth, post, showActions } = this.props;
-      console.log("POST", post);
+		const { auth, post, showActions } = this.props;
 
 		return (
 			<div className="card card-body mb-3">
 				<div className="row">
 					<div className="col-md-2">
-						<Link to="profile.html">
+						<Link to={`profile/${post.user.handle}`}>
 							<img
 								className="rounded-circle d-none d-md-block"
 								src={post.avatar}
@@ -45,7 +44,13 @@ class PostItem extends Component {
 							/>
 						</Link>
 						<br />
-						<p className="text-center">{post.name}</p>
+						<p className="text-center">
+							{post.user
+								? post.user.handle === ""
+									? post.name
+									: post.user.handle
+								: post.name}
+						</p>
 					</div>
 					<div className="col-md-10">
 						<p className="lead">{post.text}</p>

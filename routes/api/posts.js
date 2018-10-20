@@ -16,8 +16,8 @@ const Post = require("../../models/Posts.js");
 // @access - public
 router.get("/", (req, res) => {
 	Post.find()
-      .sort({ date: -1 })
-      // populate posts' users
+		.sort({ date: -1 })
+		// populate posts' users
 		.populate("user", ["handle"])
 		.then(posts => res.json(posts))
 		.catch(err =>
@@ -34,8 +34,8 @@ router.get("/:id", (req, res) => {
 	Post.findById(req.params.id)
 		// populate post user
 		.populate("user", "handle")
+		// populate comments' users (nested)
 		.populate({
-			// populate comments' users (nested)
 			path: "comments",
 			populate: { path: "user", select: "handle" },
 		})
@@ -68,6 +68,7 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
 
 	newPost.save().then(post =>
 		Post.findById(post.id)
+			// populate post user
 			.populate("user", ["handle"])
 			.then(post => res.json(post)),
 	);
@@ -109,7 +110,13 @@ router.post("/:id/like", passport.authenticate("jwt", { session: false }), (req,
 		// add user id to likes array
 		post.likes.unshift({ user: req.user.id });
 		// save and return post
-		post.save().then(post => res.json(post));
+		post.save().then(post =>
+			// find post by id and return
+			Post.findById(post._id)
+				// populate post user
+				.populate("user", "handle")
+				.then(post => res.json(post)),
+		);
 	});
 });
 
@@ -130,7 +137,13 @@ router.post("/:id/unlike", passport.authenticate("jwt", { session: false }), (re
 		// splice  out of array
 		post.likes.splice(removeIndex, 1);
 		// save and return post
-		post.save().then(post => res.json(post));
+		post.save().then(post =>
+			// find post by id and return
+			Post.findById(post._id)
+				// populate post user
+				.populate("user", "handle")
+				.then(post => res.json(post)),
+		);
 	});
 });
 
@@ -165,11 +178,11 @@ router.post("/:id/comments", passport.authenticate("jwt", { session: false }), (
 				post.comments.unshift(comment);
 				// save new post
 				post.save().then(post =>
-               Post.findById(post.id)
-                  // populate post user
+					Post.findById(post.id)
+						// populate post user
 						.populate("user", "handle")
+						// populate comments' users (nested)
 						.populate({
-							// populate comments' users (nested)
 							path: "comments",
 							populate: { path: "user", select: "handle" },
 						})
@@ -227,16 +240,10 @@ router.post(
 	"/:id/comments/:comment_id/like",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-		Post.findById(req.params.id)
-			.then(post => {
-				// check comment array to see if incoming comment_id matches existing comment._id
-				const commentMatch = post.comments.filter(
-					comment => comment._id.toString() === req.params.comment_id,
-				)[0];
+		Comment.findById(req.params.comment_id)
+			.then(comment => {
 				// check comment's like array to see if incoming like's user.id matches existing like's user (also an id)
-				const likeMatch = commentMatch.likes.filter(
-					like => like.user.toString() === req.user.id,
-				);
+				const likeMatch = comment.likes.filter(like => like.user.toString() === req.user.id);
 
 				// if like match exists, user has already liked comment, then return json msg
 				if (likeMatch.length > 0) {
@@ -246,9 +253,20 @@ router.post(
 				}
 
 				// add user id to likes array
-				commentMatch.likes.unshift({ user: req.user.id });
-				// save and return post
-				post.save().then(post => res.json(post));
+				comment.likes.unshift({ user: req.user.id });
+				// save comment
+				comment.save().then(() =>
+					// find post by id and return
+					Post.findById(req.params.id)
+						// populate post user
+						.populate("user", "handle")
+						// populate comments' users (nested)
+						.populate({
+							path: "comments",
+							populate: { path: "user", select: "handle" },
+						})
+						.then(post => res.json(post)),
+				);
 			})
 			.catch(err =>
 				res.status(404).json({
@@ -265,16 +283,10 @@ router.post(
 	"/:id/comments/:comment_id/unlike",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-		Post.findById(req.params.id)
-			.then(post => {
-				// check comment array to see if incoming comment_id matches existing comment._id
-				const commentMatch = post.comments.filter(
-					comment => comment._id.toString() === req.params.comment_id,
-				)[0];
+		Comment.findById(req.params.comment_id)
+			.then(comment => {
 				// check comment's like array to see if incoming like's user.id matches existing like's user (also an id)
-				const likeMatch = commentMatch.likes.filter(
-					like => like.user.toString() === req.user.id,
-				);
+				const likeMatch = comment.likes.filter(like => like.user.toString() === req.user.id);
 
 				// if like match doesn't exists, user hasn't liked comment, then return json msg
 				if (likeMatch.length === 0) {
@@ -284,13 +296,24 @@ router.post(
 				}
 
 				// get remove index
-				const removeIndex = commentMatch.likes
+				const removeIndex = comment.likes
 					.map(like => like.user.toString())
 					.indexOf(req.user.id);
 				// splice out of array
-				commentMatch.likes.splice(removeIndex, 1);
-				// save and return post
-				post.save().then(post => res.json(post));
+				comment.likes.splice(removeIndex, 1);
+				// save comment
+				comment.save().then(() =>
+					// find post by id and return
+					Post.findById(req.params.id)
+						// populate post user
+						.populate("user", "handle")
+						// populate comments' users (nested)
+						.populate({
+							path: "comments",
+							populate: { path: "user", select: "handle" },
+						})
+						.then(post => res.json(post)),
+				);
 			})
 			.catch(err =>
 				res.status(404).json({

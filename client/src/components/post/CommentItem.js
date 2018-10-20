@@ -31,15 +31,14 @@ class CommentItem extends Component {
 
 	render() {
 		const { auth, comment } = this.props;
-      const postId = this.props.match.params.id;
-      console.log('POSTID', postId);
-      console.log('COMMENTID', comment._id);
+		const postId = this.props.match.params.id;
+		console.log("COMMENT", comment);
 
 		return (
 			<div className="card card-body mb-3">
 				<div className="row">
 					<div className="col-md-2">
-						<Link to="profile.html">
+						<Link to={`/profile/${comment.user.handle}`}>
 							<img
 								className="rounded-circle d-none d-md-block"
 								src={comment.avatar}
@@ -47,7 +46,13 @@ class CommentItem extends Component {
 							/>
 						</Link>
 						<br />
-						<p className="text-center">{comment.name}</p>
+						<p className="text-center">
+							{comment.user
+								? comment.user.handle === ""
+									? comment.name
+									: comment.user.handle
+								: comment.name}
+						</p>
 					</div>
 					<div className="col-md-10">
 						<p className="lead">{comment.text}</p>
