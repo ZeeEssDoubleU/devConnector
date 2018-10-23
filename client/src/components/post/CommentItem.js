@@ -27,12 +27,11 @@ class CommentItem extends Component {
 				return false;
 			}
 		}
-	};
-
+   };
+   
 	render() {
 		const { auth, comment } = this.props;
 		const postId = this.props.match.params.id;
-		console.log("COMMENT", comment);
 
 		return (
 			<div className="card card-body mb-3">
@@ -41,7 +40,7 @@ class CommentItem extends Component {
 						<Link to={`/profile/${comment.user.handle}`}>
 							<img
 								className="rounded-circle d-none d-md-block"
-								src={comment.avatar}
+								src={comment.user.avatar ? comment.user.avatar : comment.avatar}
 								alt="User Avatar"
 							/>
 						</Link>
@@ -79,7 +78,7 @@ class CommentItem extends Component {
 								<i className="text-secondary fas fa-thumbs-down" />
 							</button>
 							<span>
-								{comment.user === auth.user.id ? (
+								{comment.user._id === auth.user.id ? (
 									<button
 										onClick={() => this.onDeleteClick(postId, comment._id)}
 										type="button"

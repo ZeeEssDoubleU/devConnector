@@ -7,7 +7,6 @@ import Spinner from "../common/Spinner.js";
 import { getCurrentProfile } from "../../actions/profileActions.js";
 import { deleteAccount } from "../../actions/profileActions.js";
 // import components
-import ProfileActions from "./ProfileActions.js";
 import Experience from "./Experience.js";
 import Education from "./Education.js";
 
@@ -37,14 +36,27 @@ class Dashboard extends Component {
 						<p className="lead text-muted">
 							Welcome, <Link to={`/profile/${profile.handle}`}>{user.name}.</Link>
 						</p>
-						<ProfileActions />
+						<div className="btn-group mb-4" role="group">
+							<Link to="/edit-profile" className="btn btn-light">
+								<i className="fas fa-user-circle text-info mr-1" /> Edit Profile
+							</Link>
+							<Link to="/add-experience" className="btn btn-light">
+								<i className="fab fa-black-tie text-info mr-1" />
+								Add Experience
+							</Link>
+							<Link to="/add-education" className="btn btn-light">
+								<i className="fas fa-graduation-cap text-info mr-1" />
+								Add Education
+							</Link>
+						</div>
+						<button
+							onClick={this.onDeleteClick}
+							className="btn btn-danger"
+							style={{ float: "right" }}>
+							Delete Account
+						</button>
 						<Experience experience={profile.experience} />
 						<Education education={profile.education} />
-						<div style={{ marginBottom: "60px " }}>
-							<button onClick={this.onDeleteClick} className="btn btn-danger">
-								Delete My Account
-							</button>
-						</div>
 					</div>
 				);
 			} else {
@@ -56,6 +68,12 @@ class Dashboard extends Component {
 						<Link to="/create-profile" className="btn btn-lg btn-info">
 							Create Profile
 						</Link>
+						<button
+							onClick={this.onDeleteClick}
+							className="btn btn-danger"
+							style={{ float: "right" }}>
+							Delete Account
+						</button>
 					</div>
 				);
 			}

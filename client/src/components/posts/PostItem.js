@@ -30,7 +30,9 @@ class PostItem extends Component {
 	};
 
 	render() {
-		const { auth, post, showActions } = this.props;
+      const { auth, post, showActions } = this.props;
+      
+      console.log('POST');
 
 		return (
 			<div className="card card-body mb-3">
@@ -83,7 +85,7 @@ class PostItem extends Component {
 									<Link to={`/post/${post._id}`} className="btn btn-info mr-1">
 										Comments {`(${post.comments.length})`}
 									</Link>
-									{post.user === auth.user.id ? (
+									{post.user._id === auth.user.id ? (
 										<button
 											onClick={() => this.onDeleteClick(post._id)}
 											type="button"

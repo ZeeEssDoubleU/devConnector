@@ -4,14 +4,17 @@ import {
 	GET_POST,
 	POST_LOADING,
 	DELETE_POST,
-	UPDATE_LIKE,
+	LIKE_UNLIKE_POST,
+	GET_COMMENTS,
 	ADD_COMMENT,
 	DELETE_COMMENT,
+	LIKE_UNLIKE_COMMENT,
 } from "../actions/types.js";
 
 const initialState = {
 	posts: [],
 	post: {},
+	comments: [],
 	loading: false,
 };
 
@@ -44,28 +47,43 @@ const postReducer = (state = initialState, action) => {
 				...state,
 				posts: state.posts.filter(post => post._id !== action.payload._id),
 			};
+		case LIKE_UNLIKE_POST:
+			return {
+				...state,
+				post: state.post._id === action.payload._id ? action.payload : state.post,
+				posts: state.posts.map(
+					post => (post._id === action.payload._id ? action.payload : post),
+				),
+			};
+		case GET_COMMENTS:
+			return {
+				...state,
+				comments: action.payload,
+			};
 		case ADD_COMMENT:
 			return {
 				...state,
-				post: action.payload,
+				post: {
+					...state.post,
+					comments: [action.payload.id, ...state.comments],
+				},
+				comments: [action.payload, ...state.comments],
 			};
 		case DELETE_COMMENT:
 			return {
 				...state,
-				post: action.payload,
-				posts: state.posts.filter(post => post._id !== action.payload._id),
+				post: {
+					...state.post,
+					comments: state.post.comments.filter(id => id !== action.payload._id),
+				},
+				comments: state.comments.filter(comment => comment._id !== action.payload._id),
 			};
-		case UPDATE_LIKE:
+		case LIKE_UNLIKE_COMMENT:
 			return {
 				...state,
-				post: action.payload,
-				posts: state.posts.map(post => {
-					if (post._id === action.payload._id) {
-						return action.payload;
-					} else {
-						return post;
-					}
-				}),
+				comments: state.comments.map(
+					comment => (comment._id === action.payload._id ? action.payload : comment),
+				),
 			};
 		default:
 			return state;

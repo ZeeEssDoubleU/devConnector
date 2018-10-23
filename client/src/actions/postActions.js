@@ -1,14 +1,16 @@
 import axios from "axios";
 import {
 	ADD_POST,
-	GET_ERRORS,
 	GET_POSTS,
 	GET_POST,
 	POST_LOADING,
 	DELETE_POST,
+	LIKE_UNLIKE_POST,
+	GET_COMMENTS,
 	ADD_COMMENT,
 	DELETE_COMMENT,
-	UPDATE_LIKE,
+	LIKE_UNLIKE_COMMENT,
+	GET_ERRORS,
 	CLEAR_ERRORS,
 } from "./types.js";
 
@@ -44,6 +46,7 @@ export const getPost = postId => dispatch => {
 		.get(`/api/posts/${postId}`)
 		.then(res => {
 			console.log("Post:", res.data);
+
 			dispatch({
 				type: GET_POST,
 				payload: res.data,
@@ -106,7 +109,7 @@ export const likePost = postId => dispatch => {
 		.then(res => {
 			console.log("Post liked:", res.data);
 			dispatch({
-				type: UPDATE_LIKE,
+				type: LIKE_UNLIKE_POST,
 				payload: res.data,
 			});
 		})
@@ -126,7 +129,7 @@ export const unlikePost = postId => dispatch => {
 		.then(res => {
 			console.log("Post unliked:", res.data);
 			dispatch({
-				type: UPDATE_LIKE,
+				type: LIKE_UNLIKE_POST,
 				payload: res.data,
 			});
 		})
@@ -143,13 +146,33 @@ export const unlikePost = postId => dispatch => {
 /***************** COMMENTS *****************/
 /***************** COMMENTS *****************/
 
+// get post's comments
+export const getComments = postId => dispatch => {
+	axios
+		.get(`/api/posts/${postId}/comments`)
+		.then(res => {
+			console.log("Comments:", res.data);
+			dispatch({
+				type: GET_COMMENTS,
+				payload: res.data,
+			});
+		})
+		.catch(err => {
+			console.log("Errors:", err.response.data);
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data,
+			});
+		});
+};
+
 // add comment
 export const addComment = (commentData, postId) => dispatch => {
 	axios
 		.post(`/api/posts/${postId}/comments`, commentData)
 		.then(res => {
 			dispatch(clearErrors());
-			console.log("Comment added:", res.data.comments[0]);
+			console.log("Comment added:", res.data);
 			dispatch({
 				type: ADD_COMMENT,
 				payload: res.data,
@@ -170,6 +193,9 @@ export const deleteComment = (postId, commentId) => dispatch => {
 		.delete(`/api/posts/${postId}/comments/${commentId}`)
 		.then(res => {
 			console.log("Comment deleted:", res.data);
+			console.log("COMMENT ID", commentId);
+			console.log("COMMENT RES ID", res.data._id);
+
 			dispatch({
 				type: DELETE_COMMENT,
 				payload: res.data,
@@ -191,7 +217,7 @@ export const likeComment = (postId, commentId) => dispatch => {
 		.then(res => {
 			console.log("Comment liked:", res.data);
 			dispatch({
-				type: UPDATE_LIKE,
+				type: LIKE_UNLIKE_COMMENT,
 				payload: res.data,
 			});
 		})
@@ -211,7 +237,7 @@ export const unlikeComment = (postId, commentId) => dispatch => {
 		.then(res => {
 			console.log("Comment unliked:", res.data);
 			dispatch({
-				type: UPDATE_LIKE,
+				type: LIKE_UNLIKE_COMMENT,
 				payload: res.data,
 			});
 		})

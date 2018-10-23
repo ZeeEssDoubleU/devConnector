@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 // import actions
-import { getPost } from "../../actions/postActions.js";
+import { getPost, getComments } from "../../actions/postActions.js";
 // import components
 import CommentForm from "./CommentForm";
 import CommentFeed from "./CommentFeed";
@@ -14,10 +14,11 @@ class Post extends Component {
 	componentDidMount() {
 		// get post by post id (url param)
 		this.props.getPost(this.props.match.params.id);
+		this.props.getComments(this.props.match.params.id);
 	}
 
 	render() {
-		const { post, loading } = this.props.posting;
+		const { post, comments, loading } = this.props.posting;
 		let postContent; // initialize variable to populate component below
 
 		if (post === null || loading || Object.keys(post).length === 0) {
@@ -27,7 +28,7 @@ class Post extends Component {
 				<div>
 					<PostItem post={post} showActions={false} />
 					<CommentForm postId={post._id} />
-					<CommentFeed comments={post.comments} />
+					<CommentFeed comments={comments} />
 				</div>
 			);
 		}
@@ -51,6 +52,7 @@ class Post extends Component {
 
 Post.propTypes = {
 	getPost: PropTypes.func.isRequired,
+	getComments: PropTypes.func.isRequired,
 	posting: PropTypes.object.isRequired,
 };
 
@@ -60,7 +62,7 @@ const mapStateToProps = state => ({
 
 Post = connect(
 	mapStateToProps,
-	{ getPost },
+	{ getPost, getComments },
 )(Post);
 
 export default Post;
