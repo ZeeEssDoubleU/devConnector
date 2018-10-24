@@ -1,5 +1,5 @@
 import axios from "axios";
-import keys from '../config/keys_dev.js';
+import keys from '../config/keys.js';
 
 // gitHub api calls
 export const getGithub = username => {
