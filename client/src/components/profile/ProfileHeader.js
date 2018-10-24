@@ -1,19 +1,25 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-const prependHttp = require("prepend-http");
-
 class ProfileHeader extends Component {
 	render() {
 		const { profile } = this.props;
 		const { website, social } = profile;
 		const urls = { website, ...social }; // collect all urls into single object
 
+		// function to check if urls contain http(s) and prepend them if not
+		const checkHttp = url => {
+			// set match to http://, https://, or ftp:// (^ = at beginning)
+			let match = /^((http|https|ftp):\/\/)/;
+			// test if url includes match. If not, prepend http(s)
+			return !match.test(url) ? "//" + url : url;
+		};
+
 		// collect each url key/value from the urls object
 		// url[0] = key, url[1] = value (used below)
 		Object.entries(urls).forEach(url => {
 			// reformat and reassign each url value to its respective key in the urls object
-			urls[url[0]] = url[1] === "" ? "" : prependHttp(url[1], { https: true });
+			urls[url[0]] = url[1] === "" ? "" : checkHttp(url[1]);
 		});
 
 		// map urls to icons

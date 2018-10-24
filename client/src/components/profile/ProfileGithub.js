@@ -15,11 +15,13 @@ class ProfileGithub extends Component {
 	}
 
 	async componentDidMount() {
-      const { userName } = this.props;
-      const data = await getGithub(userName);
-		this.setState({
-			repos: data,
-		});
+		const { userName } = this.props;
+		const data = await getGithub(userName);
+		if (this.refs.myRef) {
+			this.setState({
+				repos: data,
+			});
+		}
 	}
 
 	render() {
