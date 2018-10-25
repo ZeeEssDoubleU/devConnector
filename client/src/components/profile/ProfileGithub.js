@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-// import api calls
-import { getGithub } from "../../utils/apiCalls.js";
+import axios from "axios";
 
 class ProfileGithub extends Component {
 	constructor(props) {
@@ -16,12 +14,16 @@ class ProfileGithub extends Component {
 
 	async componentDidMount() {
 		const { userName } = this.props;
-		const data = await getGithub(userName);
-		if (this.refs.myRef) {
-			this.setState({
-				repos: data,
-			});
-		}
+		await axios
+			.get(`/api/profile/github/${userName}`)
+			.then(res => {
+				if (this.refs.myRef) {
+					this.setState({
+						repos: res.data,
+					});
+				}
+			})
+			.catch(err => console.log(err));
 	}
 
 	render() {
@@ -61,9 +63,6 @@ ProfileGithub.propTypes = {
 	userName: PropTypes.string.isRequired,
 };
 
-ProfileGithub = connect(
-	null,
-	{ getGithub },
-)(ProfileGithub);
+ProfileGithub = connect(null)(ProfileGithub);
 
 export default ProfileGithub;
