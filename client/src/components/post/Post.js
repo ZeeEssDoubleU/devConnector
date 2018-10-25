@@ -18,7 +18,7 @@ class Post extends Component {
 	}
 
 	render() {
-		const { post, comments, loading } = this.props.posting;
+      const { post, comments, loading } = this.props.postState;
 		let postContent; // initialize variable to populate component below
 
 		if (post === null || loading || Object.keys(post).length === 0) {
@@ -53,11 +53,11 @@ class Post extends Component {
 Post.propTypes = {
 	getPost: PropTypes.func.isRequired,
 	getComments: PropTypes.func.isRequired,
-	posting: PropTypes.object.isRequired,
+	postState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	posting: state.posting,
+	postState: state.postState,
 });
 
 Post = connect(

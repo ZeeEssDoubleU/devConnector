@@ -15,7 +15,7 @@ class Profiles extends Component {
 	}
 
 	render() {
-		const { profiles, loading } = this.props.profile;
+      const { profiles, loading } = this.props.profileState;
 		let profileItems; // initialize for use below
 
 		if (profiles === null || loading) {
@@ -48,11 +48,11 @@ class Profiles extends Component {
 
 Profiles.propTypes = {
 	getProfiles: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
+	profileState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	profile: state.profile,
+	profileState: state.profileState,
 });
 
 Profiles = connect(

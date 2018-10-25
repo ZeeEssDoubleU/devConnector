@@ -39,14 +39,14 @@ class Register extends Component {
 
 	componentDidMount() {
 		// if user already logged in, redirect them to dashboard
-		if (this.props.auth.isAuthenticated) {
+		if (this.props.authState.isAuthenticated) {
 			this.props.history.push("/dashboard");
 		}
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
+      if (nextProps.errorState) {
+         this.setState({ errors: nextProps.errorState });
 		}
 	}
 
@@ -106,13 +106,13 @@ class Register extends Component {
 
 Register.propTypes = {
 	registerUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
+	authState: PropTypes.object.isRequired,
+	errorState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
-	errors: state.errors,
+	authState: state.authState,
+	errorState: state.errorState,
 });
 
 Register = withRouter(

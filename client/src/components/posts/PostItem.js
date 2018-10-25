@@ -19,9 +19,9 @@ class PostItem extends Component {
 	};
 
 	findUserLike = likes => {
-		const { auth } = this.props;
+		const { authState } = this.props;
 		if (likes) {
-			if (likes.filter(like => like.user === auth.user.id).length > 0) {
+			if (likes.filter(like => like.user === authState.user.id).length > 0) {
 				return true;
 			} else {
 				return false;
@@ -30,7 +30,7 @@ class PostItem extends Component {
 	};
 
 	render() {
-		const { auth, post, showActions } = this.props;
+		const { authState, post, showActions } = this.props;
 
 		console.log("POST");
 
@@ -89,7 +89,7 @@ class PostItem extends Component {
 									<Link to={`/post/${post._id}`} className="btn btn-info mr-1">
 										Comments {`(${post.comments.length})`}
 									</Link>
-									{post.user._id === auth.user.id ? (
+									{post.user._id === authState.user.id ? (
 										<button
 											onClick={() => this.onDeleteClick(post._id)}
 											type="button"
@@ -115,13 +115,13 @@ PostItem.propTypes = {
 	likePost: PropTypes.func.isRequired,
 	unlikePost: PropTypes.func.isRequired,
 	deletePost: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
+	authState: PropTypes.object.isRequired,
 	post: PropTypes.object.isRequired,
 	showActions: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
+	authState: state.authState,
 });
 
 PostItem = withRouter(

@@ -14,7 +14,7 @@ class Posts extends Component {
 	}
 
 	render() {
-		const { posts, loading } = this.props.posting;
+		const { posts, loading } = this.props.postState;
 		let postContent;
 
 		if (posts === null || loading) {
@@ -40,11 +40,11 @@ class Posts extends Component {
 
 Posts.propTypes = {
 	getPosts: PropTypes.func.isRequired,
-	posting: PropTypes.object.isRequired,
+	postState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	posting: state.posting,
+	postState: state.postState,
 });
 
 Posts = connect(

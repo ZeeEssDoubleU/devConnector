@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 class Landing extends Component {
 	componentDidMount() {
 		// if user already logged in, redirect them to dashboard
-		if (this.props.auth.isAuthenticated) {
+		if (this.props.authState.isAuthenticated) {
 			this.props.history.push("/dashboard");
 		}
 	}
@@ -40,11 +40,11 @@ class Landing extends Component {
 }
 
 Landing.propTypes = {
-	auth: PropTypes.object.isRequired,
+	authState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
+	authState: state.authState,
 });
 
 Landing = connect(

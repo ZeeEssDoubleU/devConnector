@@ -44,13 +44,13 @@ class EditProfile extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
+		if (nextProps.errorState) {
+			this.setState({ errors: nextProps.errorState });
 		}
 
-		if (nextProps.profile.profile) {
+		if (nextProps.profileState.profile) {
 			// pull profile data from app (not component) profile state
-			const { skills, social, ...profile } = nextProps.profile.profile;
+			const { skills, social, ...profile } = nextProps.profileState.profile;
 			// check to see if profile has social links
 			const socialEmpty = Object.keys(social).every(key => social[key] === "");
 
@@ -247,13 +247,13 @@ class EditProfile extends Component {
 EditProfile.propTypes = {
 	createProfile: PropTypes.func.isRequired,
 	getCurrentProfile: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
+	profileState: PropTypes.object.isRequired,
+	errorState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	profile: state.profile,
-	errors: state.errors,
+	profileState: state.profileState,
+	errorState: state.errorState,
 });
 
 EditProfile = connect(

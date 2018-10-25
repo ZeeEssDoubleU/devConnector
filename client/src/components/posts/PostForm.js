@@ -18,7 +18,7 @@ class PostForm extends Component {
 
 	onSubmit = event => {
 		event.preventDefault();
-		const { user } = this.props.auth;
+      const { user } = this.props.authState;
 		const newPost = {
 			text: this.state.text,
 			avatar: user.avatar,
@@ -37,9 +37,9 @@ class PostForm extends Component {
 	};
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
+		if (nextProps.errorState) {
 			this.setState({
-				errors: nextProps.errors,
+				errors: nextProps.errorState,
 			});
 		}
 	}
@@ -75,13 +75,13 @@ class PostForm extends Component {
 
 PostForm.propTypes = {
 	addPost: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
+	authState: PropTypes.object.isRequired,
+	errorState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
-	errors: state.errors,
+	authState: state.authState,
+	errorState: state.errorState,
 });
 
 PostForm = connect(

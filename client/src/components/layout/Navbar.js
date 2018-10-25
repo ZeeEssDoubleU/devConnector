@@ -17,7 +17,7 @@ class Navbar extends Component {
 	};
 
 	render() {
-		const { isAuthenticated, user } = this.props.auth;
+		const { isAuthenticated, user } = this.props.authState;
 
 		const authLinks = (
 			<ul className="navbar-nav ml-auto">
@@ -93,11 +93,11 @@ class Navbar extends Component {
 Navbar.propTypes = {
 	clearCurrentProfile: PropTypes.func.isRequired,
 	logoutUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
+	authState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
+	authState: state.authState,
 });
 
 Navbar = withRouter(

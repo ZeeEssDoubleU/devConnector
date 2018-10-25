@@ -41,8 +41,8 @@ class AddExperience extends Component {
 	};
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
+      if (nextProps.errorState) {
+         this.setState({ errors: nextProps.errorState });
 		}
 	}
 
@@ -139,13 +139,11 @@ class AddExperience extends Component {
 
 AddExperience.propTypes = {
 	addExperience: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
+	errorState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-	profile: state.profile,
-	errors: state.errors,
+	errorState: state.errorState,
 });
 
 AddExperience = withRouter(

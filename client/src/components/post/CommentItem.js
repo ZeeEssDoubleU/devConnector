@@ -19,9 +19,9 @@ class CommentItem extends Component {
 	};
 
 	findUserLike = likes => {
-		const { auth } = this.props;
+		const { authState } = this.props;
 		if (likes) {
-			if (likes.filter(like => like.user === auth.user.id).length > 0) {
+			if (likes.filter(like => like.user === authState.user.id).length > 0) {
 				return true;
 			} else {
 				return false;
@@ -30,7 +30,7 @@ class CommentItem extends Component {
 	};
 
 	render() {
-		const { auth, comment } = this.props;
+		const { authState, comment } = this.props;
 		const postId = this.props.match.params.id;
 
 		return (
@@ -83,7 +83,7 @@ class CommentItem extends Component {
 								<i className="text-secondary fas fa-thumbs-down" />
 							</button>
 							<span>
-								{comment.user._id === auth.user.id ? (
+								{comment.user._id === authState.user.id ? (
 									<button
 										onClick={() => this.onDeleteClick(postId, comment._id)}
 										type="button"
@@ -108,12 +108,12 @@ CommentItem.propTypes = {
 	likeComment: PropTypes.func.isRequired,
 	unlikeComment: PropTypes.func.isRequired,
 	deleteComment: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
+	authState: PropTypes.object.isRequired,
 	comment: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
+	authState: state.authState,
 });
 
 CommentItem = withRouter(

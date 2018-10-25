@@ -19,13 +19,13 @@ class Profile extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.profile.profile === null && this.props.profile.loading) {
+		if (nextProps.profileState.profile === null && this.props.profileState.loading) {
 			this.props.history.push("/no-profile");
 		}
 	}
 
 	render() {
-		const { profile, loading } = this.props.profile;
+		const { profile, loading } = this.props.profileState;
 		let profileContent;
 
 		if (profile === null || loading) {
@@ -64,11 +64,11 @@ class Profile extends Component {
 
 Profile.propTypes = {
 	getProfileByHandle: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
+	profileState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	profile: state.profile,
+	profileState: state.profileState,
 });
 
 Profile = connect(

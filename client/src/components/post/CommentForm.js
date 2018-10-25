@@ -18,7 +18,7 @@ class CommentForm extends Component {
 
 	onSubmit = event => {
 		event.preventDefault();
-		const { user } = this.props.auth;
+      const { user } = this.props.authState;
       const { postId } = this.props;
 		const newComment = {
 			text: this.state.text,
@@ -40,9 +40,9 @@ class CommentForm extends Component {
 	};
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
+		if (nextProps.errorState) {
 			this.setState({
-				errors: nextProps.errors,
+				errors: nextProps.errorState,
 			});
 		}
 	}
@@ -79,13 +79,13 @@ class CommentForm extends Component {
 CommentForm.propTypes = {
 	addComment: PropTypes.func.isRequired,
 	postId: PropTypes.string.isRequired,
-	auth: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
+	authState: PropTypes.object.isRequired,
+	errorState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
-	errors: state.errors,
+	authState: state.authState,
+	errorState: state.errorState,
 });
 
 CommentForm = connect(
