@@ -27,8 +27,8 @@ class CommentItem extends Component {
 				return false;
 			}
 		}
-   };
-   
+	};
+
 	render() {
 		const { auth, comment } = this.props;
 		const postId = this.props.match.params.id;
@@ -37,7 +37,12 @@ class CommentItem extends Component {
 			<div className="card card-body mb-3">
 				<div className="row">
 					<div className="col-md-2">
-						<Link to={`/profile/${comment.user.handle}`}>
+						<Link
+							to={
+								comment.user.handle === ""
+									? "/no-profile"
+									: `/profile/${comment.user.handle}`
+							}>
 							<img
 								className="rounded-circle d-none d-md-block"
 								src={comment.user.avatar ? comment.user.avatar : comment.avatar}
