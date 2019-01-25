@@ -9,6 +9,12 @@ import TextAreaFieldGroup from "../common/TextAreaFieldGroup.js";
 import { addEducation } from "../../actions/profileActions.js";
 
 class AddEducation extends Component {
+   static propTypes = {
+      addEducation: PropTypes.func.isRequired,
+      errorState: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+   };
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -136,11 +142,6 @@ class AddEducation extends Component {
 		);
 	}
 }
-
-AddEducation.propTypes = {
-	addEducation: PropTypes.func.isRequired,
-	errorState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = (state) => ({
 	errorState: state.errorState,

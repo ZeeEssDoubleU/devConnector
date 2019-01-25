@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SelectListGroup = (props) => {
-	const selectOptions = props.options.map((option) => {
+const SelectListGroup = props => {
+	const selectOptions = props.options.map(option => {
 		if (option.value === "") {
 			return (
 				<option key={option.label} value={option.value} disabled>

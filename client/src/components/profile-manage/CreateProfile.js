@@ -10,6 +10,12 @@ import SelectListGroup from "../common/SelectListGroup.js";
 import { createProfile } from "../../actions/profileActions.js";
 
 class CreateProfile extends Component {
+	static propTypes = {
+		createProfile: PropTypes.func.isRequired,
+		errorState: PropTypes.object.isRequired,
+		history: PropTypes.object.isRequired,
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -222,18 +228,13 @@ class CreateProfile extends Component {
 	}
 }
 
-CreateProfile.propTypes = {
-   createProfile: PropTypes.func.isRequired,
-	errorState: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = state => ({
 	errorState: state.errorState,
 });
 
 CreateProfile = connect(
 	mapStateToProps,
-   { createProfile },
+	{ createProfile },
 )(CreateProfile);
 
 export default CreateProfile;

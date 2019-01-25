@@ -1,18 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 // import components
 import CommentItem from "./CommentItem.js";
 
-class CommentFeed extends Component {
-	render() {
-		const { comments } = this.props;
-		const feedContent = comments.map(comment => (
-			<CommentItem key={comment._id} comment={comment} />
-		));
+const CommentFeed = props => {
+	const feedContent = props.comments.map(comment => (
+		<CommentItem key={comment._id} comment={comment} />
+	));
 
-		return <div className="comments">{feedContent}</div>;
-	}
-}
+	return <div className="comments">{feedContent}</div>;
+};
 
 CommentFeed.propTypes = {
 	comments: PropTypes.array.isRequired,

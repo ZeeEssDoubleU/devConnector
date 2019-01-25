@@ -6,6 +6,10 @@ import Moment from "react-moment";
 import { deleteEducation } from "../../actions/profileActions";
 
 class Education extends Component {
+   static propTypes = {
+      deleteEducation: PropTypes.func.isRequired,
+   };
+
 	onDeleteClick = id => {
 		this.props.deleteEducation(id);
 	};
@@ -48,10 +52,6 @@ class Education extends Component {
 		);
 	}
 }
-
-Education.propTypes = {
-	deleteEducation: PropTypes.func.isRequired,
-};
 
 Education = connect(
 	null,

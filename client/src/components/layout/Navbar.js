@@ -8,6 +8,13 @@ import { logoutUser } from "../../actions/authActions.js";
 import { clearCurrentProfile } from "../../actions/profileActions.js";
 
 class Navbar extends Component {
+   static propTypes = {
+      clearCurrentProfile: PropTypes.func.isRequired,
+      logoutUser: PropTypes.func.isRequired,
+      authState: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+   };
+
 	onLogoutClick = event => {
 		event.preventDefault();
 		// logout current user
@@ -89,12 +96,6 @@ class Navbar extends Component {
 		);
 	}
 }
-
-Navbar.propTypes = {
-	clearCurrentProfile: PropTypes.func.isRequired,
-	logoutUser: PropTypes.func.isRequired,
-	authState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	authState: state.authState,

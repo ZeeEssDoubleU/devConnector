@@ -11,6 +11,13 @@ import Experience from "./Experience.js";
 import Education from "./Education.js";
 
 class Dashboard extends Component {
+	static propTypes = {
+		getCurrentProfile: PropTypes.func.isRequired,
+		deleteAccount: PropTypes.func.isRequired,
+		authState: PropTypes.object.isRequired,
+		profileState: PropTypes.object.isRequired,
+	};
+
 	onDeleteClick = event => {
 		this.props.deleteAccount();
 	};
@@ -95,13 +102,6 @@ class Dashboard extends Component {
 		);
 	}
 }
-
-Dashboard.propTypes = {
-	getCurrentProfile: PropTypes.func.isRequired,
-	deleteAccount: PropTypes.func.isRequired,
-	authState: PropTypes.object.isRequired,
-	profileState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	profileState: state.profileState,

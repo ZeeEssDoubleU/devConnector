@@ -6,6 +6,19 @@ import PropTypes from "prop-types";
 import { likePost, unlikePost, deletePost } from "../../actions/postActions.js";
 
 class PostItem extends Component {
+	static propTypes = {
+		likePost: PropTypes.func.isRequired,
+		unlikePost: PropTypes.func.isRequired,
+		deletePost: PropTypes.func.isRequired,
+		authState: PropTypes.object.isRequired,
+		post: PropTypes.object.isRequired,
+		showActions: PropTypes.bool,
+   };
+   
+   static defaultProps = {
+      showActions: true,
+   };
+
 	onLikeClick = id => {
 		this.props.likePost(id);
 	};
@@ -39,10 +52,7 @@ class PostItem extends Component {
 				<div className="row">
 					<div className="col-md-2">
 						<Link
-                     to={post.user.handle === "" 
-                        ? "/no-profile" 
-                        : `/profile/${post.user.handle}`
-                     }>
+							to={post.user.handle === "" ? "/no-profile" : `/profile/${post.user.handle}`}>
 							<img
 								className="rounded-circle d-none d-md-block"
 								src={post.avatar}
@@ -106,19 +116,6 @@ class PostItem extends Component {
 		);
 	}
 }
-
-PostItem.defaultProps = {
-	showActions: true,
-};
-
-PostItem.propTypes = {
-	likePost: PropTypes.func.isRequired,
-	unlikePost: PropTypes.func.isRequired,
-	deletePost: PropTypes.func.isRequired,
-	authState: PropTypes.object.isRequired,
-	post: PropTypes.object.isRequired,
-	showActions: PropTypes.bool,
-};
 
 const mapStateToProps = state => ({
 	authState: state.authState,

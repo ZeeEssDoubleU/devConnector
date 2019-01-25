@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TextFieldGroup = (props) => {
+const TextFieldGroup = props => {
 	return (
 		<div className="form-group">
 			<input

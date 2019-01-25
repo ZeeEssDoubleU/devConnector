@@ -6,6 +6,10 @@ import Moment from "react-moment";
 import { deleteExperience } from "../../actions/profileActions";
 
 class Experience extends Component {
+	static propTypes = {
+		deleteExperience: PropTypes.func.isRequired,
+	};
+
 	onDeleteClick = id => {
 		this.props.deleteExperience(id);
 	};
@@ -47,13 +51,9 @@ class Experience extends Component {
 	}
 }
 
-Experience.propTypes = {
-	deleteExperience: PropTypes.func.isRequired,
-};
-
 Experience = connect(
 	null,
-   { deleteExperience },
+	{ deleteExperience },
 )(Experience);
 
 export default Experience;

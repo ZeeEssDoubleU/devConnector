@@ -4,6 +4,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 class Landing extends Component {
+   static propTypes = {
+      authState: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+   };
+
 	componentDidMount() {
 		// if user already logged in, redirect them to dashboard
 		if (this.props.authState.isAuthenticated) {
@@ -38,10 +43,6 @@ class Landing extends Component {
 		);
 	}
 }
-
-Landing.propTypes = {
-	authState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	authState: state.authState,

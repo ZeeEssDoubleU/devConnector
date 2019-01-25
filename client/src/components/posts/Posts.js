@@ -9,6 +9,11 @@ import Spinner from "../common/Spinner.js";
 import { getPosts } from "../../actions/postActions.js";
 
 class Posts extends Component {
+	static propTypes = {
+		getPosts: PropTypes.func.isRequired,
+		postState: PropTypes.object.isRequired,
+	};
+
 	componentDidMount() {
 		this.props.getPosts();
 	}
@@ -37,11 +42,6 @@ class Posts extends Component {
 		);
 	}
 }
-
-Posts.propTypes = {
-	getPosts: PropTypes.func.isRequired,
-	postState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	postState: state.postState,

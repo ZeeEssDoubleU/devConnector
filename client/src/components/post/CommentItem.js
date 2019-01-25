@@ -6,6 +6,18 @@ import PropTypes from "prop-types";
 import { likeComment, unlikeComment, deleteComment } from "../../actions/postActions.js";
 
 class CommentItem extends Component {
+	static propTypes = {
+		likeComment: PropTypes.func.isRequired,
+		unlikeComment: PropTypes.func.isRequired,
+		deleteComment: PropTypes.func.isRequired,
+		authState: PropTypes.object.isRequired,
+		comment: PropTypes.object.isRequired,
+   };
+   
+   static defaultProps = {
+      showActions: true,
+   };
+
 	onLikeClick = (postId, commentId) => {
 		this.props.likeComment(postId, commentId);
 	};
@@ -99,18 +111,6 @@ class CommentItem extends Component {
 		);
 	}
 }
-
-CommentItem.defaultProps = {
-	showActions: true,
-};
-
-CommentItem.propTypes = {
-	likeComment: PropTypes.func.isRequired,
-	unlikeComment: PropTypes.func.isRequired,
-	deleteComment: PropTypes.func.isRequired,
-	authState: PropTypes.object.isRequired,
-	comment: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	authState: state.authState,

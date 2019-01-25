@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const NoProfile = props => {
 	return (
@@ -20,6 +21,10 @@ const NoProfile = props => {
 			<h1 className="display-4">No profile found for user.</h1>
 		</div>
 	);
+};
+
+NoProfile.propTypes = {
+	history: PropTypes.object.isRequired,
 };
 
 export default NoProfile;

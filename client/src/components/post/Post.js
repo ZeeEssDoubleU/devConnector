@@ -11,6 +11,12 @@ import PostItem from "../posts/PostItem.js";
 import Spinner from "../common/Spinner.js";
 
 class Post extends Component {
+   static propTypes = {
+      getPost: PropTypes.func.isRequired,
+      getComments: PropTypes.func.isRequired,
+      postState: PropTypes.object.isRequired,
+   };
+
 	componentDidMount() {
 		// get post by post id (url param)
 		this.props.getPost(this.props.match.params.id);
@@ -49,12 +55,6 @@ class Post extends Component {
 		);
 	}
 }
-
-Post.propTypes = {
-	getPost: PropTypes.func.isRequired,
-	getComments: PropTypes.func.isRequired,
-	postState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	postState: state.postState,

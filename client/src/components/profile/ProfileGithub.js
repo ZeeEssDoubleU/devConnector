@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import axios from "axios";
 
 class ProfileGithub extends Component {
+   static propTypes = {
+      userName: PropTypes.string.isRequired,
+   };
+
 	constructor(props) {
 		super(props);
 
@@ -58,10 +62,6 @@ class ProfileGithub extends Component {
 		);
 	}
 }
-
-ProfileGithub.propTypes = {
-	userName: PropTypes.string.isRequired,
-};
 
 ProfileGithub = connect(null)(ProfileGithub);
 

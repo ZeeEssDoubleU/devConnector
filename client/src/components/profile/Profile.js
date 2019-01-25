@@ -12,6 +12,12 @@ import Spinner from "../common/Spinner.js";
 import { getProfileByHandle } from "../../actions/profileActions.js";
 
 class Profile extends Component {
+	static propTypes = {
+		getProfileByHandle: PropTypes.func.isRequired,
+		profileState: PropTypes.object.isRequired,
+		history: PropTypes.object.isRequired,
+	};
+
 	componentDidMount() {
 		if (this.props.match.params.handle) {
 			this.props.getProfileByHandle(this.props.match.params.handle);
@@ -61,11 +67,6 @@ class Profile extends Component {
 		);
 	}
 }
-
-Profile.propTypes = {
-	getProfileByHandle: PropTypes.func.isRequired,
-	profileState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	profileState: state.profileState,

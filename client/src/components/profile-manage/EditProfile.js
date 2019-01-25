@@ -12,6 +12,14 @@ import { createProfile } from "../../actions/profileActions.js";
 import { getCurrentProfile } from "../../actions/profileActions.js";
 
 class EditProfile extends Component {
+	static propTypes = {
+		createProfile: PropTypes.func.isRequired,
+		getCurrentProfile: PropTypes.func.isRequired,
+		profileState: PropTypes.object.isRequired,
+		errorState: PropTypes.object.isRequired,
+		history: PropTypes.object.isRequired,
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -243,13 +251,6 @@ class EditProfile extends Component {
 		);
 	}
 }
-
-EditProfile.propTypes = {
-	createProfile: PropTypes.func.isRequired,
-	getCurrentProfile: PropTypes.func.isRequired,
-	profileState: PropTypes.object.isRequired,
-	errorState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	profileState: state.profileState,

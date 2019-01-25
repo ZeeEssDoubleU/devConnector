@@ -7,6 +7,13 @@ import TextAreaFieldGroup from "../common/TextAreaFieldGroup.js";
 import { addComment } from "../../actions/postActions.js";
 
 class CommentForm extends Component {
+   static propTypes = {
+      addComment: PropTypes.func.isRequired,
+      postId: PropTypes.string.isRequired,
+      authState: PropTypes.object.isRequired,
+      errorState: PropTypes.object.isRequired,
+   };
+
 	constructor(props) {
 		super(props);
 
@@ -75,13 +82,6 @@ class CommentForm extends Component {
 		);
 	}
 }
-
-CommentForm.propTypes = {
-	addComment: PropTypes.func.isRequired,
-	postId: PropTypes.string.isRequired,
-	authState: PropTypes.object.isRequired,
-	errorState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	authState: state.authState,

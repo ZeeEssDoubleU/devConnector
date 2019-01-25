@@ -7,6 +7,12 @@ import TextAreaFieldGroup from "../common/TextAreaFieldGroup.js";
 import { addPost } from "../../actions/postActions.js";
 
 class PostForm extends Component {
+   static propTypes = {
+      addPost: PropTypes.func.isRequired,
+      authState: PropTypes.object.isRequired,
+      errorState: PropTypes.object.isRequired,
+   };
+
 	constructor(props) {
 		super(props);
 
@@ -72,12 +78,6 @@ class PostForm extends Component {
 		);
 	}
 }
-
-PostForm.propTypes = {
-	addPost: PropTypes.func.isRequired,
-	authState: PropTypes.object.isRequired,
-	errorState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	authState: state.authState,

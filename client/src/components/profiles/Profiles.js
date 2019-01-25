@@ -10,6 +10,11 @@ import { getProfiles } from "../../actions/profileActions.js";
 import ProfileItem from "./ProfileItem.js";
 
 class Profiles extends Component {
+   static propTypes = {
+      getProfiles: PropTypes.func.isRequired,
+      profileState: PropTypes.object.isRequired,
+   };
+
 	componentDidMount() {
 		this.props.getProfiles();
 	}
@@ -45,11 +50,6 @@ class Profiles extends Component {
 		);
 	}
 }
-
-Profiles.propTypes = {
-	getProfiles: PropTypes.func.isRequired,
-	profileState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	profileState: state.profileState,

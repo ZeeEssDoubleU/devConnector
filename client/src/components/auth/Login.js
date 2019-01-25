@@ -7,6 +7,13 @@ import { loginUser } from "../../actions/authActions.js";
 import TextFieldGroup from "../common/TextFieldGroup.js";
 
 class Login extends Component {
+	static propTypes = {
+		loginUser: PropTypes.func.isRequired,
+		authState: PropTypes.object.isRequired,
+		errorState: PropTypes.object.isRequired,
+		history: PropTypes.object.isRequired,
+	};
+
 	constructor() {
 		super();
 		this.state = {
@@ -86,12 +93,6 @@ class Login extends Component {
 		);
 	}
 }
-
-Login.propTypes = {
-	loginUser: PropTypes.func.isRequired,
-	authState: PropTypes.object.isRequired,
-	errorState: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
 	authState: state.authState,

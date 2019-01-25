@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const InputGroup = (props) => {
+const InputGroup = props => {
 	return (
 		<div className="input-group mb-3">
 			<div className="input-group-prepend">
