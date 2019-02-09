@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 // import actions
-import { likeComment, unlikeComment, deleteComment } from "../../actions/postActions.js";
+import {
+	likeComment,
+	unlikeComment,
+	deleteComment,
+} from "../../actions/postActions.js";
 
 class CommentItem extends Component {
 	static propTypes = {
@@ -12,11 +16,11 @@ class CommentItem extends Component {
 		deleteComment: PropTypes.func.isRequired,
 		authState: PropTypes.object.isRequired,
 		comment: PropTypes.object.isRequired,
-   };
-   
-   static defaultProps = {
-      showActions: true,
-   };
+	};
+
+	static defaultProps = {
+		showActions: true,
+	};
 
 	onLikeClick = (postId, commentId) => {
 		this.props.likeComment(postId, commentId);
@@ -57,18 +61,22 @@ class CommentItem extends Component {
 							}>
 							<img
 								className="rounded-circle d-none d-md-block"
-								src={comment.user.avatar ? comment.user.avatar : comment.avatar}
+								src={
+									comment.user.avatar
+										? comment.user.avatar
+										: comment.avatar
+								}
 								alt="User Avatar"
 							/>
+							<br />
+							<p className="text-center">
+								{comment.user
+									? comment.user.handle === ""
+										? comment.name
+										: comment.user.handle
+									: comment.name}
+							</p>
 						</Link>
-						<br />
-						<p className="text-center">
-							{comment.user
-								? comment.user.handle === ""
-									? comment.name
-									: comment.user.handle
-								: comment.name}
-						</p>
 					</div>
 					<div className="col-md-10">
 						<p className="lead">{comment.text}</p>
@@ -85,7 +93,9 @@ class CommentItem extends Component {
 									}
 								/>
 								{comment.likes ? (
-									<span className="badge badge-light">{comment.likes.length}</span>
+									<span className="badge badge-light">
+										{comment.likes.length}
+									</span>
 								) : null}
 							</button>
 							<button
@@ -97,7 +107,9 @@ class CommentItem extends Component {
 							<span>
 								{comment.user._id === authState.user.id ? (
 									<button
-										onClick={() => this.onDeleteClick(postId, comment._id)}
+										onClick={() =>
+											this.onDeleteClick(postId, comment._id)
+										}
 										type="button"
 										className="btn btn-danger mr-1">
 										<i className="fas fa-times" />

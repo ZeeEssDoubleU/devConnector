@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 import {
 	ADD_POST,
 	GET_POSTS,
@@ -50,9 +52,12 @@ const postReducer = (state = initialState, action) => {
 		case LIKE_UNLIKE_POST:
 			return {
 				...state,
-				post: state.post._id === action.payload._id ? action.payload : state.post,
-				posts: state.posts.map(
-					post => (post._id === action.payload._id ? action.payload : post),
+				post:
+					state.post._id === action.payload._id
+						? action.payload
+						: state.post,
+				posts: state.posts.map(post =>
+					post._id === action.payload._id ? action.payload : post,
 				),
 			};
 		case GET_COMMENTS:
@@ -74,15 +79,19 @@ const postReducer = (state = initialState, action) => {
 				...state,
 				post: {
 					...state.post,
-					comments: state.post.comments.filter(id => id !== action.payload._id),
+					comments: state.post.comments.filter(
+						id => id !== action.payload._id,
+					),
 				},
-				comments: state.comments.filter(comment => comment._id !== action.payload._id),
+				comments: state.comments.filter(
+					comment => comment._id !== action.payload._id,
+				),
 			};
 		case LIKE_UNLIKE_COMMENT:
 			return {
 				...state,
-				comments: state.comments.map(
-					comment => (comment._id === action.payload._id ? action.payload : comment),
+				comments: state.comments.map(comment =>
+					comment._id === action.payload._id ? action.payload : comment,
 				),
 			};
 		default:
@@ -91,3 +100,13 @@ const postReducer = (state = initialState, action) => {
 };
 
 export default postReducer;
+
+export const getPosts = state => state.posts;
+export const getComments = state => state.comments;
+export const getPostLoading = state => state.loading;
+
+export const getPost = postId =>
+	createSelector(
+		getPosts,
+		posts => posts.filter(post => post._id === postId),
+	);

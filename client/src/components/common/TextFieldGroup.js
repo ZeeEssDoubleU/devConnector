@@ -13,7 +13,7 @@ const TextFieldGroup = props => {
 				onChange={props.onChange}
 				disabled={props.disabled}
 			/>
-			{props.info && <small className="form-text text-muted">{props.info}</small>}
+			{props.info && <small className="form-text">{props.info}</small>}
 			{props.error && <div className="invalid-feedback">{props.error}</div>}
 		</div>
 	);

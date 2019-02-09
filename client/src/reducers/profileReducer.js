@@ -24,13 +24,13 @@ const profileReducer = (state = initialState, action) => {
 				...state,
 				profile: action.payload,
 				loading: false,
-         };
-      case GET_PROFILES:
-         return {
-            ...state,
-            profiles: action.payload,
-            loading: false,
-         };
+			};
+		case GET_PROFILES:
+			return {
+				...state,
+				profiles: action.payload,
+				loading: false,
+			};
 		case PROFILE_NOT_FOUND:
 		case CLEAR_CURRENT_PROFILE:
 			return {
@@ -43,3 +43,9 @@ const profileReducer = (state = initialState, action) => {
 };
 
 export default profileReducer;
+
+
+
+export const getProfile = state => state.profile;
+export const getProfiles = state => state.profiles;
+export const getProfileLoading = state => state.loading;

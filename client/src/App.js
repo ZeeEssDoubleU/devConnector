@@ -54,11 +54,11 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className="App">
+			<div className="app-container">
 				<Navbar />
-				<Route exact path="/" component={Landing} />
-				<div className="container">
+				<div className="app-body">
 					<Switch>
+						<Route exact path="/" component={Landing} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/profiles" component={Profiles} />

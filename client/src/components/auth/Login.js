@@ -23,6 +23,50 @@ class Login extends Component {
 		};
 	}
 
+	render() {
+		const { errors } = this.state;
+		return (
+			<div className="login">
+				<div className="dark-overlay inner text-light">
+					<div className="container">
+						<div className="row">
+							<div className="col-md-8 m-auto">
+								<h1 className="display-4 text-center">Log In</h1>
+								<p className="lead text-center">
+									Sign in to your DevConnector account
+								</p>
+								<form onSubmit={this.onSubmit}>
+									<TextFieldGroup
+										type="email"
+										placeholder="Email Address"
+										name="email"
+										value={this.state.email}
+										onChange={this.onChange}
+										error={errors.email}
+									/>
+
+									<TextFieldGroup
+										type="password"
+										placeholder="Password"
+										name="password"
+										value={this.state.password}
+										onChange={this.onChange}
+										error={errors.password}
+									/>
+
+									<input
+										type="submit"
+										className="btn btn-info btn-block mt-4"
+									/>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value,
@@ -54,43 +98,6 @@ class Login extends Component {
 		if (nextProps.errorState) {
 			this.setState({ errors: nextProps.errorState });
 		}
-	}
-
-	render() {
-		const { errors } = this.state;
-		return (
-			<div className="login">
-				<div className="container">
-					<div className="row">
-						<div className="col-md-8 m-auto">
-							<h1 className="display-4 text-center">Log In</h1>
-							<p className="lead text-center">Sign in to your DevConnector account</p>
-							<form onSubmit={this.onSubmit}>
-								<TextFieldGroup
-									type="email"
-									placeholder="Email Address"
-									name="email"
-									value={this.state.email}
-									onChange={this.onChange}
-									error={errors.email}
-								/>
-
-								<TextFieldGroup
-									type="password"
-									placeholder="Password"
-									name="password"
-									value={this.state.password}
-									onChange={this.onChange}
-									error={errors.password}
-								/>
-
-								<input type="submit" className="btn btn-info btn-block mt-4" />
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
 	}
 }
 

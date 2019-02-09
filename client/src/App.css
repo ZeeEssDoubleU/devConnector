@@ -8,7 +8,22 @@ img {
    width: 100%;
 }
 
-.landing {
+.app-container {
+   position: relative;
+   min-height: 100vh;
+}
+
+.app-body {
+   padding-bottom: 72px;
+}
+
+footer {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+}
+
+.landing, .login, .register {
    position: relative;
    background: url('./img/showcase.jpg') no-repeat;
    background-size: cover;
@@ -18,7 +33,7 @@ img {
    margin-bottom: -50px;
 }
 
-.landing-inner {
+.inner {
    padding-top: 80px;
 }
 
