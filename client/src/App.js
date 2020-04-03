@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -30,8 +30,8 @@ import NoProfile from "./components/not-found/NoProfile.js";
 // import stylesheet
 import "./App.css";
 
-class App extends Component {
-	componentWillMount() {
+const App = props => {
+	useEffect(() => {
 		// check for token
 		if (localStorage.jwtToken) {
 			// set token to 'authorization' header
@@ -39,46 +39,60 @@ class App extends Component {
 			// decode token and get user info and expiration
 			const decoded = jwt_decode(localStorage.jwtToken);
 			// set current user
-			this.props.setCurrentUser(decoded);
+			props.setCurrentUser(decoded);
 
 			// check for expired token
 			const currentTime = Date.now() / 1000;
 			if (currentTime >= decoded.exp) {
 				// logout current user
-				this.props.logoutUser(this.props.history);
+				props.logoutUser(props.history);
 				// clear current profile
-				this.props.clearCurrentProfile();
+				props.clearCurrentProfile();
 			}
 		}
-	}
+	}, []);
 
-	render() {
-		return (
-			<div className="app-container">
-				<Navbar />
-				<div className="app-body">
-					<Switch>
-						<Route exact path="/" component={Landing} />
-						<Route exact path="/register" component={Register} />
-						<Route exact path="/login" component={Login} />
-						<Route exact path="/profiles" component={Profiles} />
-						<Route exact path="/profile/:handle" component={Profile} />
-						<PrivateRoute exact path="/dashboard" component={Dashboard} />
-						<PrivateRoute exact path="/create-profile" component={CreateProfile} />
-						<PrivateRoute exact path="/edit-profile" component={EditProfile} />
-						<PrivateRoute exact path="/add-experience" component={AddExperience} />
-						<PrivateRoute exact path="/add-education" component={AddEducation} />
-						<PrivateRoute exact path="/post/:id" component={Post} />
-						<PrivateRoute exact path="/feed" component={Posts} />
-						<Route exact path="/no-profile" component={NoProfile} />
-						<Route component={NotFound} />
-					</Switch>
-				</div>
-				<Footer />
+	return (
+		<div className="app-container">
+			<Navbar />
+			<div className="app-body">
+				<Switch>
+					<Route exact path="/" component={Landing} />
+					<Route exact path="/register" component={Register} />
+					<Route exact path="/login" component={Login} />
+					<Route exact path="/profiles" component={Profiles} />
+					<Route exact path="/profile/:handle" component={Profile} />
+					<PrivateRoute exact path="/dashboard" component={Dashboard} />
+					<PrivateRoute
+						exact
+						path="/create-profile"
+						component={CreateProfile}
+					/>
+					<PrivateRoute
+						exact
+						path="/edit-profile"
+						component={EditProfile}
+					/>
+					<PrivateRoute
+						exact
+						path="/add-experience"
+						component={AddExperience}
+					/>
+					<PrivateRoute
+						exact
+						path="/add-education"
+						component={AddEducation}
+					/>
+					<PrivateRoute exact path="/post/:id" component={Post} />
+					<PrivateRoute exact path="/feed" component={Posts} />
+					<Route exact path="/no-profile" component={NoProfile} />
+					<Route component={NotFound} />
+				</Switch>
 			</div>
-		);
-	}
-}
+			<Footer />
+		</div>
+	);
+};
 
 App.propTypes = {
 	clearCurrentProfile: PropTypes.func.isRequired,
@@ -86,11 +100,6 @@ App.propTypes = {
 	setCurrentUser: PropTypes.func,
 };
 
-App = withRouter(
-	connect(
-		null,
-		{ clearCurrentProfile, logoutUser, setCurrentUser },
-	)(App),
+export default withRouter(
+	connect(null, { clearCurrentProfile, logoutUser, setCurrentUser })(App),
 );
-
-export default App;

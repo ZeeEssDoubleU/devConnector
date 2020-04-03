@@ -1,68 +1,64 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-class ProfileGithub extends Component {
-   static propTypes = {
-      userName: PropTypes.string.isRequired,
-   };
+const ProfileGithub = props => {
+	const [repos, setRepos] = useState([]);
 
-	constructor(props) {
-		super(props);
+	// effect that retrieves github repo on component mount
+	useEffect(() => {
+		getGithubRepo();
+	}, []);
 
-		this.state = {
-			repos: [],
-		};
-	}
+	const getGithubRepo = async () => {
+		try {
+			const response = await axios.get(
+				`/api/profile/github/${props.userName}`,
+			);
+			setRepos(response.data);
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
-	async componentDidMount() {
-		const { userName } = this.props;
-		await axios
-			.get(`/api/profile/github/${userName}`)
-			.then(res => {
-				if (this.refs.myRef) {
-					this.setState({
-						repos: res.data,
-					});
-				}
-			})
-			.catch(err => console.log(err));
-	}
-
-	render() {
-		const { repos } = this.state;
-
-		const repoItems = repos.map(repo => (
-			<div key={repo.id} className="card card-body mb-2">
-				<div className="row">
-					<div className="col-md-6">
-						<h4>
-							<a href={repo.html_url} className="text-info" target="_blank">
-								{repo.name}
-							</a>
-						</h4>
-						<p>{repo.description}</p>
-					</div>
-					<div className="col-md-6">
-						<span className="badge badge-info mr-1">Stars: {repo.stargazers_count}</span>
-						<span className="badge badge-secondary mr-1">Watchers: {repo.watcher_count}</span>
-						<span className="badge badge-success">Forks: {repo.forks_count}</span>
-					</div>
+	const repoItems = repos.map(repo => (
+		<div key={repo.id} className="card card-body mb-2">
+			<div className="row">
+				<div className="col-md-6">
+					<h4>
+						<a href={repo.html_url} className="text-info" target="_blank">
+							{repo.name}
+						</a>
+					</h4>
+					<p>{repo.description}</p>
+				</div>
+				<div className="col-md-6">
+					<span className="badge badge-info mr-1">
+						Stars: {repo.stargazers_count}
+					</span>
+					<span className="badge badge-secondary mr-1">
+						Watchers: {repo.watcher_count}
+					</span>
+					<span className="badge badge-success">
+						Forks: {repo.forks_count}
+					</span>
 				</div>
 			</div>
-		));
+		</div>
+	));
 
-		return (
-			<div ref="myRef">
-				<hr />
-				<h3 className="mb-4">Latest Github Repos</h3>
-				{repoItems}
-			</div>
-		);
-	}
-}
+	return (
+		<div>
+			<hr />
+			<h3 className="mb-4">Latest Github Repos</h3>
+			{repoItems}
+		</div>
+	);
+};
 
-ProfileGithub = connect(null)(ProfileGithub);
+ProfileGithub.propTypes = {
+	userName: PropTypes.string.isRequired,
+};
 
-export default ProfileGithub;
+export default connect(null)(ProfileGithub);
