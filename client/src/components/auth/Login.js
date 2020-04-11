@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // import actions
@@ -6,109 +6,84 @@ import { loginUser } from "../../actions/authActions.js";
 // import components
 import TextFieldGroup from "../common/TextFieldGroup.js";
 
-class Login extends Component {
-	static propTypes = {
-		loginUser: PropTypes.func.isRequired,
-		authState: PropTypes.object.isRequired,
-		errorState: PropTypes.object.isRequired,
-		history: PropTypes.object.isRequired,
+let Login = (props) => {
+	const [email, setEmail] = useState();
+	const [password, setPassword] = useState();
+	const [errors, setErrors] = useState();
+
+	const onSubmit = (event) => {
+		event.preventDefault();
+		const User = {
+			email,
+			password,
+		};
+		props.loginUser(User);
 	};
 
-	constructor() {
-		super();
-		this.state = {
-			email: "",
-			password: "",
-			errors: {},
-		};
-	}
+	useEffect(() => {
+		// if user logged in, redirect them to dashboard
+		if (props.authState.isAuthenticated) {
+			props.history.push("/dashboard");
+		}
 
-	render() {
-		const { errors } = this.state;
-		return (
-			<div className="login">
-				<div className="dark-overlay inner text-light">
-					<div className="container">
-						<div className="row">
-							<div className="col-md-8 m-auto">
-								<h1 className="display-4 text-center">Log In</h1>
-								<p className="lead text-center">
-									Sign in to your DevConnector account
-								</p>
-								<form onSubmit={this.onSubmit}>
-									<TextFieldGroup
-										type="email"
-										placeholder="Email Address"
-										name="email"
-										value={this.state.email}
-										onChange={this.onChange}
-										error={errors.email}
-									/>
+		if (props.errorState) {
+			setErrors(props.errorState);
+		}
+	}, [props.authState.isAuthenticated, props.errorState]);
 
-									<TextFieldGroup
-										type="password"
-										placeholder="Password"
-										name="password"
-										value={this.state.password}
-										onChange={this.onChange}
-										error={errors.password}
-									/>
+	return (
+		<div className="login">
+			<div className="dark-overlay inner text-light">
+				<div className="container">
+					<div className="row">
+						<div className="col-md-8 m-auto">
+							<h1 className="display-4 text-center">Log In</h1>
+							<p className="lead text-center">
+								Sign in to your DevConnector account
+							</p>
+							<form onSubmit={onSubmit}>
+								<TextFieldGroup
+									type="email"
+									placeholder="Email Address"
+									name="email"
+									value={email}
+									onChange={(event) => setEmail(event.target.value)}
+									error={errors && errors.email}
+								/>
 
-									<input
-										type="submit"
-										className="btn btn-info btn-block mt-4"
-									/>
-								</form>
-							</div>
+								<TextFieldGroup
+									type="password"
+									placeholder="Password"
+									name="password"
+									value={password}
+									onChange={(event) => setPassword(event.target.value)}
+									error={errors && errors.password}
+								/>
+
+								<input
+									type="submit"
+									className="btn btn-info btn-block mt-4"
+								/>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-		);
-	}
+		</div>
+	);
+};
+Login.propTypes = {
+	loginUser: PropTypes.func.isRequired,
+	authState: PropTypes.object.isRequired,
+	errorState: PropTypes.object.isRequired,
+	history: PropTypes.object.isRequired,
+};
 
-	onChange = event => {
-		this.setState({
-			[event.target.name]: event.target.value,
-		});
-	};
-
-	onSubmit = event => {
-		event.preventDefault();
-		const User = {
-			email: this.state.email,
-			password: this.state.password,
-		};
-		this.props.loginUser(User);
-	};
-
-	componentDidMount() {
-		// if user already logged in, redirect them to dashboard
-		if (this.props.authState.isAuthenticated) {
-			this.props.history.push("/dashboard");
-		}
-	}
-
-	componentWillReceiveProps(nextProps) {
-		// if user logged in, redirect them to dashboard
-		if (nextProps.authState.isAuthenticated) {
-			this.props.history.push("./dashboard");
-		}
-
-		if (nextProps.errorState) {
-			this.setState({ errors: nextProps.errorState });
-		}
-	}
-}
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	authState: state.authState,
 	errorState: state.errorState,
 });
 
-Login = connect(
-	mapStateToProps,
-	{ loginUser },
-)(Login);
+Login = connect(mapStateToProps, { loginUser })(Login);
 
 export default Login;
